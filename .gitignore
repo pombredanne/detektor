@@ -1,3 +1,6 @@
+# local tmp files
+tmp_with_enddef.py
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
