@@ -153,7 +153,7 @@ class Parser:
                 curtok = None
         s1 = self.make_string(self.cur_lang_keywords)
         s2 = self.make_string(self.cur_lang_operators)
-        return s1, s2, bigs, num_kw, num_op
+        return s1, s2, hash(bigs), num_kw, num_op
 
             
     def report_results(self, bigs):

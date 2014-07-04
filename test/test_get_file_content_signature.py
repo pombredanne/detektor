@@ -13,15 +13,37 @@ class GetPythonFileContentSignature(unittest.TestCase):
     def tearDown(self):
         self.testfilehandler.close()
 
-    def testGetPythonContent(self):
+    def testGetPythonContentKeywordString(self):
         self.assertIsInstance(self.testfilehandler, file)
         p = Parser('python', self.testfilehandler)
         kwh, oph, bigstring, num_kw, num_op = p.parse_file()
-        print kwh
-        print oph
-        print bigstring
-        print num_kw
-        print num_op
+        self.assertEqual(kwh, '_0_0_0_0_0_2_0_2_0_0_0_0_2_0_0_5_1_2_0_0_0_0_1_4_0_2_1_0_0')
+
+    def testGetPythonContentOperatorString(self):
+        self.assertIsInstance(self.testfilehandler, file)
+        p = Parser('python', self.testfilehandler)
+        kwh, oph, bigstring, num_kw, num_op = p.parse_file()
+        self.assertEqual(oph, '_1_2_0_4_0_0_1_2_0_2_0_0_0_0_0_0_0_0_0_0')
+
+    def testGetPythonContentBigstring(self):
+        self.assertIsInstance(self.testfilehandler, file)
+        p = Parser('python', self.testfilehandler)
+        kwh, oph, bigstring, num_kw, num_op = p.parse_file()
+        self.assertEqual(bigstring, 4249366350422622643)
+        self.assertEqual(num_kw, 22)
+        self.assertEqual(num_op, 12)
+
+    def testGetPythonContentNumberOfKeywords(self):
+        self.assertIsInstance(self.testfilehandler, file)
+        p = Parser('python', self.testfilehandler)
+        kwh, oph, bigstring, num_kw, num_op = p.parse_file()
+        self.assertEqual(num_kw, 22)
+
+    def testGetPythonContentNumberOfOperators(self):
+        self.assertIsInstance(self.testfilehandler, file)
+        p = Parser('python', self.testfilehandler)
+        kwh, oph, bigstring, num_kw, num_op = p.parse_file()
+        self.assertEqual(num_op, 12)
 
 
 if __name__ == '__main__':
