@@ -34,6 +34,6 @@ for stud in dirlist: # for each student in the supplied directory
 
         list_of_functions = functions
 
-        # if config.DEBUG: 
-        #     p.report_results(bigstring)
+        if config.DEBUG:
+            p.report_results(bigstring)
     os.chdir('..')

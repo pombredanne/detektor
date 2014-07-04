@@ -1,19 +1,34 @@
+""" Get detektor signature for code in a given file.
+
+Opens the file 'demo_files/donny/find.py' and sends this to the detektor codeparser.
+
+Prints misc info.
+"""
+
 import os
 import glob
 import logging
 import config
 
-from libs.defgetter import defgetter # a helper module for Python src
-
+from libs.defgetter import defgetter
 from libs.codeparser import Parser
 
-directory = os.path.abspath('demo_files/donny')
-filepath = os.path.join(directory, 'find.py')
+filepath = os.path.abspath('demo_files/donny/find.py')
 
-if os.path.isfile(filepath):
-    p = Parser('python', open(filepath, 'r'))
-    kwh, oph, bigstring, bigstringhash, num_kw, num_op = p.parse_file()
-    functions = defgetter('python', bigstring)
-    p.report_results(bigstring)
+print 'Open file "demo_files/donny/find.py"'
+filehandler = open(filepath, 'r')
+
+print 'Send filehandler to codeparser'
+p = Parser('python', filehandler)
+
+codedata = p.get_code_signature()
+
+print 'Returned code signature:'
+from pprint import pprint
+pprint(codedata)
+
+if config.VERBOSE:
+    functions = defgetter('python', codedata['bigstring'])
+    p.report_results(codedata['bigstring'])
     for function in functions:
         print function

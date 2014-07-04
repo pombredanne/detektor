@@ -155,6 +155,16 @@ class Parser:
         s2 = self.make_string(self.cur_lang_operators)
         return s1, s2, bigs, hash(bigs), num_kw, num_op
 
+    def get_code_signature(self):
+        kwh, oph, bigstring, bigstringhash, num_kw, num_op = self.parse_file()
+        return {
+            'keywordstring': kwh,
+            'operatorstring': oph,
+            'bigstring': bigstring,
+            'bigstringhash': bigstringhash,
+            'number_of_keywords': num_kw,
+            'number_of_operators': num_op,
+        }
             
     def report_results(self, bigs):
         """ For debugging only """
