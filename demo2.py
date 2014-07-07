@@ -8,7 +8,7 @@ from libs.defgetter import defgetter
 
 
 directory = os.path.abspath('demo_files')
-filename = 'find.py'
+filename = 'helloworldplus.py'
 
 os.chdir(directory)
 dirlist = glob.glob('*')

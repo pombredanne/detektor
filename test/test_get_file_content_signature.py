@@ -8,7 +8,7 @@ from libs.codeparser import Parser
 class GetPythonFileContentSignature(unittest.TestCase):
 
     def setUp(self):
-        self.testfilehandler = open('test/pyfiles/find.py', 'r')
+        self.testfilehandler = open('test/pyfiles/helloworldplus.py', 'r')
 
     def tearDown(self):
         self.testfilehandler.close()
@@ -17,33 +17,31 @@ class GetPythonFileContentSignature(unittest.TestCase):
         self.assertIsInstance(self.testfilehandler, file)
         p = Parser('python', self.testfilehandler)
         kwh, oph, bigstring, bigstring_hash, num_kw, num_op = p.parse_file()
-        self.assertEqual(kwh, '_0_0_0_0_0_2_0_2_0_0_0_0_2_0_0_5_1_2_0_0_0_0_1_4_0_2_1_0_0')
+        self.assertEqual(kwh, '_0_0_0_0_0_1_0_0_0_0_0_0_0_0_0_0_1_0_0_0_0_0_0_2_0_1_0_0_0')
 
     def testGetPythonContentOperatorString(self):
         self.assertIsInstance(self.testfilehandler, file)
         p = Parser('python', self.testfilehandler)
         kwh, oph, bigstring, bigstring_hash, num_kw, num_op = p.parse_file()
-        self.assertEqual(oph, '_1_2_0_4_0_0_1_2_0_2_0_0_0_0_0_0_0_0_0_0')
+        self.assertEqual(oph, '_0_2_0_0_0_1_0_0_0_0_0_0_0_0_0_0_0_0_0_0')
 
     def testGetPythonContentBigstring(self):
         self.assertIsInstance(self.testfilehandler, file)
         p = Parser('python', self.testfilehandler)
         kwh, oph, bigstring, bigstring_hash, num_kw, num_op = p.parse_file()
-        self.assertEqual(bigstring_hash, 4249366350422622643)
-        self.assertEqual(num_kw, 22)
-        self.assertEqual(num_op, 12)
+        self.assertEqual(bigstring_hash, -7070753577415992373)
 
     def testGetPythonContentNumberOfKeywords(self):
         self.assertIsInstance(self.testfilehandler, file)
         p = Parser('python', self.testfilehandler)
         kwh, oph, bigstring, bigstring_hash, num_kw, num_op = p.parse_file()
-        self.assertEqual(num_kw, 22)
+        self.assertEqual(num_kw, 5)
 
     def testGetPythonContentNumberOfOperators(self):
         self.assertIsInstance(self.testfilehandler, file)
         p = Parser('python', self.testfilehandler)
         kwh, oph, bigstring, bigstring_hash, num_kw, num_op = p.parse_file()
-        self.assertEqual(num_op, 12)
+        self.assertEqual(num_op, 3)
 
 
 if __name__ == '__main__':
