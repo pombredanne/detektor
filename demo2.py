@@ -5,10 +5,56 @@ import config
 
 from libs.codeparser import Parser
 from libs.defgetter import defgetter
+from libs.comparer import Comparer
+
+from libs.assignment import Assignment
 
 
 directory = os.path.abspath('demo_files')
 filename = 'helloworldplus.py'
+
+filepath = os.path.abspath('demo_files/donny/helloworldplus.py')
+
+print 'Open file "demo_files/donny/helloworldplus.py"'
+filehandler = open(filepath, 'r')
+
+print 'Send filehandler to codeparser'
+p = Parser('python', filehandler)
+
+codedata = p.get_code_signature()
+
+print 'Returned code signature:'
+from pprint import pprint
+pprint(codedata)
+
+codedata.update({'list_of_functions': defgetter('python', codedata.get('bigstring'))})
+
+assignment = Assignment(**codedata)
+
+print
+print
+print '='*70
+print
+print assignment
+print
+print '='*70
+print
+print
+
+programs = [assignment, assignment]
+percentage = 20
+
+c = Comparer(programs, percentage)
+pprint(c.get_result())
+# print c.build_result()
+
+
+
+
+
+
+################################################################################
+
 
 os.chdir(directory)
 dirlist = glob.glob('*')
