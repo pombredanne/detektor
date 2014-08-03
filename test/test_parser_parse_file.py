@@ -14,29 +14,28 @@ class TestParserParseFile(unittest.TestCase):
     def tearDown(self):
         self.testfilehandler.close()
 
-    def testGetPythonContentKeywordString(self):
+    def test_get_python_content_keywordstring(self):
         self.assertIsInstance(self.testfilehandler, file)
         p = Parser('python', self.testfilehandler)
         kwh, oph, bigstring, bigstring_hash, num_kw, num_op = p.parse_file()
         self.assertEqual(kwh, '_0_0_0_0_0_1_0_0_0_0_0_0_0_0_0_0_1_0_0_0_0_0_0_2_0_1_0_0_0')
 
-    def testGetPythonContentOperatorString(self):
+    def test_get_python_operatorstring(self):
         p = Parser('python', self.testfilehandler)
         kwh, oph, bigstring, bigstring_hash, num_kw, num_op = p.parse_file()
         self.assertEqual(oph, '_0_2_0_0_0_1_0_0_0_0_0_0_0_0_0_0_0_0_0_0')
 
-    def testGetPythonContentBigstring(self):
+    def test_get_python_bigstring(self):
         p = Parser('python', self.testfilehandler)
         kwh, oph, bigstring, bigstring_hash, num_kw, num_op = p.parse_file()
         self.assertEqual(bigstring_hash, -7070753577415992373)
 
-    def testGetPythonContentNumberOfKeywords(self):
+    def test_get_python_number_of_keywords(self):
         p = Parser('python', self.testfilehandler)
         kwh, oph, bigstring, bigstring_hash, num_kw, num_op = p.parse_file()
         self.assertEqual(num_kw, 5)
 
-    def testGetPythonContentNumberOfOperators(self):
+    def test_get_python_number_of_operators(self):
         p = Parser('python', self.testfilehandler)
         kwh, oph, bigstring, bigstring_hash, num_kw, num_op = p.parse_file()
         self.assertEqual(num_op, 3)
-

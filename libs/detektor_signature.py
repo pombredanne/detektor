@@ -1,8 +1,7 @@
-import config
 
-class CodeSignature:
+class DetektorSignature:
     """ A class holding the attributes that are used as signature. """
-    
+
     def __init__(self, *args, **kwargs):
         self.keywordstring = kwargs.get('keywordstring')
         self.operatorstring = kwargs.get('operatorstring')
@@ -19,7 +18,7 @@ Bigstring: {}
 Bigstringhash: {}
 Number of keywords: {}
 Number of operators: {}
-Functions: {}""".format(self.keywordstring, self.operatorstring, self.bigstring,
+Functions: {}""".format(
+            self.keywordstring, self.operatorstring, self.bigstring,
             self.bigstringhash, self.number_of_keywords,
             self.number_of_operators, self.list_of_functions)
-

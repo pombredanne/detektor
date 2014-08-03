@@ -169,12 +169,6 @@ class Parser:
             'list_of_functions': list_of_functions,
         }
 
-    def set_code_signature(self, obj, attributename):
-        """Set the code signature as an attribute on an object.
-
-        """
-        pass
-
     def report_results(self, bigs):
         """ For debugging only """
         print 'The big string:\n', bigs
