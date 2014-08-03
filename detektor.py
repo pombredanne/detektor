@@ -1,4 +1,5 @@
 from libs.codeparser import Parser
+from libs.comparer import Comparer
 from libs.detektor_signature import DetektorSignature
 
 
@@ -14,6 +15,12 @@ def has_deep_attr(obj, attrs):
         return True
     except AttributeError:
         return False
+
+
+def compare(objects):
+    percentage = 20
+    c = Comparer(objects, percentage)
+    return c.get_result()
 
 
 def set_detektor_signature(obj, filepath_attribute):
