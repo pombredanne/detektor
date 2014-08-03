@@ -15,4 +15,3 @@ loglevel = 'INFO'
 if DEBUG:
     loglevel = 'DEBUG'
 logging.basicConfig(level=loglevel)
-

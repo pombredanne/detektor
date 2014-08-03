@@ -16,9 +16,9 @@ and operators for a spesific language which can be used for comparing code from
 other files.
 
 ```
-import detektor
-filepath = os.path.abspath('demo_files/donny/helloworldplus.py')
-code_signature = detektor.get_detektor_signature_from_file(filepath)
+>>> import detektor
+>>> filepath = os.path.abspath('demo_files/donny/helloworldplus.py')
+>>> code_signature = detektor.get_detektor_signature_from_file(filepath)
 ```
 
 ## Install
