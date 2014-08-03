@@ -18,11 +18,6 @@ Prints misc info.
 """
 
 import os
-import glob
-import logging
-import config
-
-from libs.defgetter import defgetter
 from libs.codeparser import Parser
 
 filepath = os.path.abspath('demo_files/donny/helloworldplus.py')
@@ -38,9 +33,3 @@ codedata = p.get_code_signature()
 print 'Returned code signature:'
 from pprint import pprint
 pprint(codedata)
-
-if config.VERBOSE or True:
-    functions = defgetter('python', codedata['bigstring'])
-    p.report_results(codedata['bigstring'])
-    for function in functions:
-        print function
