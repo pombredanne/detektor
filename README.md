@@ -11,9 +11,15 @@ in files are high.
 
 ## Usage
 
-Takes a filehandler, reads it, creates a signature based on keywords
+Takes a path to a file as argument, reads it, creates a signature based on keywords
 and operators for a spesific language which can be used for comparing code from
 other files.
+
+```
+import detektor
+filepath = os.path.abspath('demo_files/donny/helloworldplus.py')
+code_signature = detektor.get_detektor_signature_from_file(filepath)
+```
 
 ## Install
 
