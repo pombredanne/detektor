@@ -16,20 +16,14 @@ The file looks like this:
 
 Prints misc info.
 """
-
 import os
-from libs.codeparser import Parser
+import pprint
+import detektor
 
 filepath = os.path.abspath('demo_files/donny/helloworldplus.py')
 
-print 'Open file "demo_files/donny/helloworldplus.py"'
-filehandler = open(filepath, 'r')
-
-print 'Send filehandler to codeparser'
-p = Parser('python', filehandler)
-
-codedata = p.get_code_signature()
+print 'Get signature for file "demo_files/donny/helloworldplus.py"'
+code_signature = detektor.get_detektor_signature_from_file(filepath)
 
 print 'Returned code signature:'
-from pprint import pprint
-pprint(codedata)
+pprint.pprint(code_signature)
