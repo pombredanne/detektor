@@ -1,12 +1,13 @@
-#!/bin/sh
-""":"
-exec python $0 ${1+"$@"}
-"""#"
+import sys
+import shlex
+import insert_tags
+import os
+import fnmatch
+import logging
+
+from libs.defgetter import defgetter
 
 DEBUG = 1
-
-import sys, shlex, insert_tags, os, fnmatch
-import logging
 
 #########################################################
 ######### STUFF THAT SHOULD BE DONE ON IMPORT ###########
@@ -15,17 +16,17 @@ import logging
 datadir = os.environ['DETEKTOR'] + "/dat/"
 
 # get info about supported languages
-f = open(datadir+"supported_languages.dat", 'r')
+f = open(datadir + "supported_languages.dat", 'r')
 languages = []
 for line in f:
-    languages.append(line.replace('\n','').split())
+    languages.append(line.replace('\n', '').split())
 f.close()
 
 logging.debug('LANGUAGES: {}'.format(languages))
 # Get keywords and operators for the supported languages
 
 # Make dictionaries for saving operators for each language
-operators = {} 
+operators = {}
 keywords = {}
 
 logging.debug('Languages: {}'.format(languages))
@@ -33,16 +34,16 @@ logging.debug('Languages: {}'.format(languages))
 for lang in languages:
     # put an empty list in dictionaries
     keywords[lang[0]] = []
-    operators[lang[0]] = [] 
+    operators[lang[0]] = []
     keyws = ''
     ops = ''
     try:
-        f = open(datadir+lang[2], 'r')
+        f = open(datadir + lang[2], 'r')
     except:
         logging.exception('Could not open {} {}'.format(datadir, lang[2]))
         sys.exit(1)
-        
-    f.readline() # read past the tag 'KEYWORDS:'
+
+    f.readline()  # read past the tag 'KEYWORDS:'
     while f:
         line = f.readline()
         if fnmatch.fnmatch(line, 'OPERATORS:*'):
@@ -55,11 +56,11 @@ for lang in languages:
         line = f.readline()
     operators[lang[0]] = ops.split()
     f.close()
-    
+
 logging.debug('KEYWORDS: {}'.format(keywords))
 logging.debug('OPERATORS: {}'.format(operators))
 
-    
+
 ############ Add multicharacter operators to wordchars ################
 def add_multichars(lexer):
     # If e.g '**' is found, this is wanted,
@@ -76,12 +77,13 @@ class Parser:
     for comparing assignments.
     """
     keywords = {}
+
     def __init__(self, language, filehandler):
         # if file[-2:] == 'py':
         #     lang = 'python'
         # elif file[-2:] == 'pl':
         #     lang = 'perl'
-            
+
         # run get_defs to insert mark where end of functions is
         new_filehandler = insert_tags.add_enddef(language, filehandler)
 
@@ -96,7 +98,7 @@ class Parser:
         self.cur_lang_operators = {}
         for op in operators[language]:
             self.cur_lang_operators[op] = 0
-            
+
         #if lang == "python":
         #    self.operators = py_operators
         #    py_operators = {}
@@ -108,14 +110,13 @@ class Parser:
         ## Why this has to be reset, I do not know
         #for key in self.operators.keys():
         #    self.operators[key] = 0
-        
 
     def make_string(self, dict):
         """Makes strings from dictionaries of keywords or operators.
         If a language has two keywords, 'if' and 'for', and an
         assignment has 2 occurences of 'if', but no occurence of 'for',
         the string made is '_0_2' where the first number represents number
-        of 'for', since 'for' comes before 'if' alphabetically. 
+        of 'for', since 'for' comes before 'if' alphabetically.
         """
         tmp_list = []
         representing_string = ""
@@ -125,9 +126,9 @@ class Parser:
         # for comparing number of each keyword/operator used.
         tmp_list.sort()
         for k in tmp_list:
-            representing_string += ("_"+str(dict[k]))
+            representing_string += ("_" + str(dict[k]))
         return representing_string
-            
+
     def parse_file(self):
         """The method that analyzes a file, and generates datastructures
         that can be used for comparing assignments."""
@@ -136,11 +137,11 @@ class Parser:
         bigs = ""
         curtok = self.lexer.get_token()
         while curtok:
-            if self.cur_lang_keywords.has_key(curtok):
+            if curtok in self.cur_lang_keywords:
                 bigs += curtok
                 num_kw += 1
                 self.cur_lang_keywords[curtok] += 1
-            elif self.cur_lang_operators.has_key(curtok):
+            elif curtok in self.cur_lang_operators:
                 bigs += curtok
                 self.cur_lang_operators[curtok] += 1
                 num_op += 1
@@ -157,6 +158,7 @@ class Parser:
 
     def get_code_signature(self):
         kwh, oph, bigstring, bigstringhash, num_kw, num_op = self.parse_file()
+        list_of_functions = defgetter('python', bigstring)
         return {
             'keywordstring': kwh,
             'operatorstring': oph,
@@ -164,21 +166,27 @@ class Parser:
             'bigstringhash': bigstringhash,
             'number_of_keywords': num_kw,
             'number_of_operators': num_op,
+            'list_of_functions': list_of_functions,
         }
-            
+
+    def set_code_signature(self, obj, attributename):
+        """Set the code signature as an attribute on an object.
+
+        """
+        pass
+
     def report_results(self, bigs):
         """ For debugging only """
-        print 'The big string:\n',bigs
+        print 'The big string:\n', bigs
         print 'Keywords:'
         for key in self.cur_lang_keywords.keys():
             num = self.cur_lang_keywords[key]
             if num > 0:
-                print '  ',num,' \''+key+'\'.'
+                print '  ', num, ' \'' + key + '\'.'
         print 'Operators:'
         for key in self.cur_lang_operators.keys():
             num = self.cur_lang_operators[key]
             if num > 0:
-                print '  ',num,' \''+key+'\'.'
+                print '  ', num, ' \'' + key + '\'.'
 
 ####################### The Parser Class End #########################
-

@@ -4,40 +4,35 @@ import logging
 import config
 
 from libs.codeparser import Parser
-from libs.defgetter import defgetter
 from libs.comparer import Comparer
 
 from libs.assignment import Assignment
 
+filename = 'demo_files/donny/helloworldplus.py'
+filepath = os.path.abspath(filename)
 
-directory = os.path.abspath('demo_files')
-filename = 'helloworldplus.py'
-
-filepath = os.path.abspath('demo_files/donny/helloworldplus.py')
-
-print 'Open file "demo_files/donny/helloworldplus.py"'
+print 'Open file', filename
 filehandler = open(filepath, 'r')
+
+assignment = Assignment(filename)
 
 print 'Send filehandler to codeparser'
 p = Parser('python', filehandler)
-
-codedata = p.get_code_signature()
+assignment.detektor_signature = p.get_code_signature()
 
 print 'Returned code signature:'
 from pprint import pprint
-pprint(codedata)
+pprint(assignment.detektor_signature)
 
-codedata.update({'list_of_functions': defgetter('python', codedata.get('bigstring'))})
-
-assignment = Assignment(**codedata)
 
 print
 print
-print '='*70
+print '=' * 70
 print
 print assignment
+print assignment.detektor_signature
 print
-print '='*70
+print '=' * 70
 print
 print
 
@@ -48,7 +43,8 @@ c = Comparer(programs, percentage)
 pprint(c.get_result())
 # print c.build_result()
 
-
+import sys
+sys.exit()
 
 
 

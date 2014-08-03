@@ -11,12 +11,13 @@ in files are high.
 
 ## Usage
 
-Takes a filehandler, reads it, creates some sort of signature based on keywords
-and operators for a spesific language.
+Takes a filehandler, reads it, creates a signature based on keywords
+and operators for a spesific language which can be used for comparing code from
+other files.
 
 ## Install
 
-This package will be added to pypi soon, but for now:
+This package is planned added to pypi, but for now:
 
     $ git clone git@github.com:apparator/detektor.git
 

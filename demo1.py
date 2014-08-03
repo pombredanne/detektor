@@ -39,7 +39,7 @@ print 'Returned code signature:'
 from pprint import pprint
 pprint(codedata)
 
-if config.VERBOSE:
+if config.VERBOSE or True:
     functions = defgetter('python', codedata['bigstring'])
     p.report_results(codedata['bigstring'])
     for function in functions:

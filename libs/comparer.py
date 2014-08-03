@@ -45,43 +45,42 @@ class Comparer:
         # using points 
         self.points = 0
         shares = 0
-
         summary = '' # a list of lines which make up the summary for a given compare
-        if a.bigstring == b.bigstring:
+        if a.codesignature.bigstring == b.codesignature.bigstring:
             self.points += 10
             # The string containing keywords and operators match.
             summary += "Programs very similar. Look for use of query-replace. <BR>"
             shares = 1
-        if a.keywordstring == b.keywordstring:
+        if a.codesignature.keywordstring == b.codesignature.keywordstring:
             self.points += 3
             # Same number of each keywords used.
-            if not a.bigstring == b.bigstring:
+            if not a.codesignature.bigstring == b.codesignature.bigstring:
                 summary += "The two programs has equal number of keyword. <BR>"
             shares = 1
-        if a.operatorstring == b.operatorstring:
+        if a.codesignature.operatorstring == b.codesignature.operatorstring:
             self.points += 3
-            if not a.bigstring == b.bigstring:
+            if not a.codesignature.bigstring == b.codesignature.bigstring:
                 summary += "Same number of each operator used. <BR>"
             shares = 1
-        if a.number_of_keywords == b.number_of_keywords:
+        if a.codesignature.number_of_keywords == b.codesignature.number_of_keywords:
             self.points += 1
-            if not a.bigstring == b.bigstring:
+            if not a.codesignature.bigstring == b.codesignature.bigstring:
                 summary += "Equal total number of keywords. <BR>"
             shares = 1
-        if a.number_of_operators == b.number_of_operators:
+        if a.codesignature.number_of_operators == b.codesignature.number_of_operators:
             self.points += 1
-            if not a.bigstring == b.bigstring:
+            if not a.codesignature.bigstring == b.codesignature.bigstring:
                 summary += "Equal number of operators. <BR>"
             shares = 1
         num_equal_funcs = 0
-        for fhash1 in a.list_of_functions:
-            for fhash2 in b.list_of_functions:
+        for fhash1 in a.codesignature.list_of_functions:
+            for fhash2 in b.codesignature.list_of_functions:
                 if fhash1 == fhash2:
                     self.points += 3
                     num_equal_funcs += 1
                     shares = 1
         if num_equal_funcs:
-            if not a.bigstring == b.bigstring:
+            if not a.codesignature.bigstring == b.codesignature.bigstring:
                 summary += "Query-replace might have been used to make function(s) look different. <BR>"
                 
         summary = summary[:-4]
