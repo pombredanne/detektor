@@ -14,8 +14,8 @@ def test():
 
 def demo(num=0):
     num = int(num)
-    if not num in (1,2):
-        print 'Choose demo 1 or 2. Run with e.g "fab demo:1"'
+    if not num in (1,2,3,4):
+        print 'Choose demo 1, 2, 3 or 4. Run with e.g "fab demo:1"'
         return
     local('python demo{}.py'.format(num))
     
