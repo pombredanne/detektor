@@ -22,9 +22,9 @@ No virtualenv? Currently this package uses standard Python modules only.
 Use command `fab demo` and look at these files:
 
 * Send path to file and get the "detektor fingerprint" [demo1.py](demo1.py)
-* [demo2.py](demo2.py)
-* [demo3.py](demo3.py)
-* [demo4.py](demo4.py)
+* Set the `detektor_fingerprint` on an object based on a filepath [demo2.py](demo2.py)
+* Set the `detektor_fingerprint` on a list of objects based on their files [demo3.py](demo3.py)
+* Parse a directory, find files and compare. Show result. [demo4.py](demo4.py)
 
 ## Run demo
 
