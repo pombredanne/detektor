@@ -18,13 +18,16 @@ class TestDetektorCompare(unittest.TestCase):
         detektor.compare(self.assignments)
         self.assertTrue(hasattr(self.a1, 'detektor_signature'))
 
+    def test_compare_but_sending_empty_list(self):
+        res = detektor.compare([])
+        self.assertTrue(type(res) == list)
+        self.assertEqual(len(res), 0)
+
     def test_compare_3_equal_files(self):
         a3 = test_helpers.Assignment('test/pyfiles/helloworldplus3.py')
         self.assignments.append(a3)
         detektor.set_detektor_signature(self.assignments, 'fileclass.filepath')
         res = detektor.compare(self.assignments)
-        # from pprint import pprint
-        # pprint(res)
         self.assertEqual(len(res), 3)
 
     def test_compare_4_equal_files(self):
@@ -34,6 +37,4 @@ class TestDetektorCompare(unittest.TestCase):
         self.assignments.append(a4)
         detektor.set_detektor_signature(self.assignments, 'fileclass.filepath')
         res = detektor.compare(self.assignments)
-        # from pprint import pprint
-        # pprint(res)
         self.assertEqual(len(res), 6)

@@ -7,19 +7,13 @@ A library for finding similarities in code.
 
 Created to find similarities of a set of code files. Used to compare a set of
 hand-ins in programming education courses, and can report if similarity of code
-in files are high.
+in files are high based on a couple of techniques described below.
 
 ## Usage
 
-Takes a path to a file as argument, reads it, creates a signature based on keywords
-and operators for a spesific language which can be used for comparing code from
-other files.
+Use command `fab demo` and look at these files:
 
-```
->>> import detektor
->>> filepath = os.path.abspath('demo_files/donny/helloworldplus.py')
->>> code_signature = detektor.get_detektor_signature_from_file(filepath)
-```
+* [demo1.py](demo1.py)
 
 ## Install
 

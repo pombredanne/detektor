@@ -20,7 +20,8 @@ class Comparer:
                 if not sum_points in self.result:
                     self.result[sum_points] = []
                 self.result[sum_points].append((self.programs[i], self.programs[j], details))
-        self.sum_points = sum_points / len(self.programs)
+        if sum_points:
+            self.sum_points = sum_points / len(self.programs)
         #print "Total number of comparisons was " + str(self.total_comparisons) + "\n"
 
     def compare(self, a, b):
