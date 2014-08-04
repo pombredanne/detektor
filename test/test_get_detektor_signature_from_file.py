@@ -20,14 +20,14 @@ class TestGetDetektorSignatureFromFile(unittest.TestCase):
         self.filepath = 'test/pyfiles/helloworldplus.py'
 
     def test_get_detektor_signature_from_file(self):
-        sign = detektor.get_detektor_signature_from_file(self.filepath)
+        sign = detektor.get_detektor_signature_from_file('python', self.filepath)
         self.assertEqual(type(sign), dict)
 
     def test_get_detektor_signature_from_file_has_all_keys(self):
-        sign = detektor.get_detektor_signature_from_file(self.filepath)
+        sign = detektor.get_detektor_signature_from_file('python', self.filepath)
         for key in signature_keys:
             self.assertTrue(key in sign)
 
     def test_get_detektor_signature_from_file_file_does_not_exist(self):
         with self.assertRaises(IOError):
-            detektor.get_detektor_signature_from_file('this/file/does/not/exist.py')
+            detektor.get_detektor_signature_from_file('python', 'this/file/does/not/exist.py')

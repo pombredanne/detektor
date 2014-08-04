@@ -25,13 +25,14 @@ class TestSetSignatureOnListOfObjects(unittest.TestCase):
         del self.mockassignment
 
     def test_detektor_signature_var_set_on_list_of_objects(self):
-        alist = detektor.set_detektor_signature_on_list_of_objects(self.assignments, 'f.path')
+        alist = detektor.set_detektor_signature_on_list_of_objects('python', self.assignments, 'f.path')
         for a in alist:
             self.assertTrue(hasattr(a, 'detektor_signature'))
 
     def test_detektor_signature_set_raises_exception_on_wrong_file_path(self):
         with self.assertRaises(AttributeError):
             detektor.set_detektor_signature_on_list_of_objects(
+                'python',
                 self.assignments,
                 'f.non_existing_path')
 
@@ -39,4 +40,5 @@ class TestSetSignatureOnListOfObjects(unittest.TestCase):
         mockass = MockAssignment('does/not/exist.py')
         assignments = [mockass, mockass]
         with self.assertRaises(IOError):
-            mockass = detektor.set_detektor_signature_on_list_of_objects(assignments, 'f.path')
+            mockass = detektor.set_detektor_signature_on_list_of_objects(
+                'python', assignments, 'f.path')

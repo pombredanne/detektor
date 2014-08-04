@@ -21,7 +21,7 @@ class Assignment(object):
     filepath = os.path.abspath('./demo_files/donny/helloworldplus.py')
 
 a = Assignment()
-detektor.set_detektor_signature(a, 'filepath')
+detektor.set_detektor_signature('python', a, 'filepath')
 
 print 'File signature:'
 print a.detektor_signature

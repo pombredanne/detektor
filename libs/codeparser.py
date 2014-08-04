@@ -79,10 +79,6 @@ class Parser:
     keywords = {}
 
     def __init__(self, language, filehandler):
-        # if file[-2:] == 'py':
-        #     lang = 'python'
-        # elif file[-2:] == 'pl':
-        #     lang = 'perl'
 
         # run get_defs to insert mark where end of functions is
         new_filehandler = insert_tags.add_enddef(language, filehandler)
@@ -98,18 +94,6 @@ class Parser:
         self.cur_lang_operators = {}
         for op in operators[language]:
             self.cur_lang_operators[op] = 0
-
-        #if lang == "python":
-        #    self.operators = py_operators
-        #    py_operators = {}
-        #    for op in py_operator_list:
-        #        py_operators[op] = 0
-        #    # do corresponding with keywords instead of py_keyword_list
-        #    for k in py_keyword_list:
-        #        self.keywords[k] = 0
-        ## Why this has to be reset, I do not know
-        #for key in self.operators.keys():
-        #    self.operators[key] = 0
 
     def make_string(self, dict):
         """Makes strings from dictionaries of keywords or operators.

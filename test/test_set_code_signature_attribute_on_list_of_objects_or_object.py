@@ -25,10 +25,10 @@ class TestSetSignatureOnListOfObjectsOrObject(unittest.TestCase):
         del self.mockassignment
 
     def test_detektor_signature_var_set_on_list_of_objects(self):
-        alist = detektor.set_detektor_signature(self.assignments, 'f.path')
+        alist = detektor.set_detektor_signature('python', self.assignments, 'f.path')
         for a in alist:
             self.assertTrue(hasattr(a, 'detektor_signature'))
 
     def test_detektor_signature_var_set_on_object(self):
-        a = detektor.set_detektor_signature(self.mockassignment, 'f.path')
+        a = detektor.set_detektor_signature('python', self.mockassignment, 'f.path')
         self.assertTrue(hasattr(a, 'detektor_signature'))

@@ -23,7 +23,7 @@ import detektor
 filepath = os.path.abspath('./demo_files/donny/helloworldplus.py')
 
 print 'Get signature for file "{}"'.format(filepath)
-code_signature = detektor.get_detektor_signature_from_file(filepath)
+code_signature = detektor.get_detektor_signature_from_file('python', filepath)
 
 print 'Returned code signature:'
 pprint.pprint(code_signature)

@@ -12,7 +12,7 @@ class TestDetektorCompare(unittest.TestCase):
         self.a1 = test_helpers.Assignment('test/pyfiles/helloworldplus.py')
         self.a2 = test_helpers.Assignment('test/pyfiles/helloworldplus2.py')
         self.assignments = [self.a1, self.a2]
-        detektor.set_detektor_signature(self.assignments, 'fileclass.filepath')
+        detektor.set_detektor_signature('python', self.assignments, 'fileclass.filepath')
 
     def test_compare_2_equal_files(self):
         detektor.compare(self.assignments)
@@ -26,7 +26,7 @@ class TestDetektorCompare(unittest.TestCase):
     def test_compare_3_equal_files(self):
         a3 = test_helpers.Assignment('test/pyfiles/helloworldplus3.py')
         self.assignments.append(a3)
-        detektor.set_detektor_signature(self.assignments, 'fileclass.filepath')
+        detektor.set_detektor_signature('python', self.assignments, 'fileclass.filepath')
         res = detektor.compare(self.assignments)
         self.assertEqual(len(res), 3)
 
@@ -35,6 +35,6 @@ class TestDetektorCompare(unittest.TestCase):
         self.assignments.append(a3)
         a4 = test_helpers.Assignment('test/pyfiles/helloworldplus4.py')
         self.assignments.append(a4)
-        detektor.set_detektor_signature(self.assignments, 'fileclass.filepath')
+        detektor.set_detektor_signature('python', self.assignments, 'fileclass.filepath')
         res = detektor.compare(self.assignments)
         self.assertEqual(len(res), 6)

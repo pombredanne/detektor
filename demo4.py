@@ -19,7 +19,7 @@ for d in dirlist:
     assignment = Assignment(os.path.join(os.path.abspath(d), filename))
     assignments.append(assignment)
 
-detektor.set_detektor_signature(assignments, 'filepath')
+detektor.set_detektor_signature('python', assignments, 'filepath')
 result = detektor.compare(assignments)
 
 for compared in result:

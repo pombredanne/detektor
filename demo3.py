@@ -36,7 +36,7 @@ assignments = [
 ]
 
 # You can also send multiple objects, and the path can go deeper
-detektor.set_detektor_signature(assignments, 'fileclass.filepath')
+detektor.set_detektor_signature('python', assignments, 'fileclass.filepath')
 
 for a in assignments:
     print 'File signature:'

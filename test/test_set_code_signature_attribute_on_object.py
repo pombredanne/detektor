@@ -21,12 +21,13 @@ class TestSetSignatureOnObject(unittest.TestCase):
         del self.mockassignment
 
     def test_detektor_signature_var_set_on_object(self):
-        mockassignment = detektor.set_detektor_signature_on_single_object(self.mockassignment, 'f.path')
+        mockassignment = detektor.set_detektor_signature_on_single_object('python', self.mockassignment, 'f.path')
         self.assertTrue(hasattr(mockassignment, 'detektor_signature'))
 
     def test_detektor_signature_set_raises_exception_on_non_existing_deep_path(self):
         with self.assertRaises(AttributeError):
             detektor.set_detektor_signature_on_single_object(
+                'python', 
                 self.mockassignment,
                 'f.non_existing_path')
 
@@ -34,4 +35,4 @@ class TestSetSignatureOnObject(unittest.TestCase):
         mockassignment = MockAssignment('does/not/exist.py')
         with self.assertRaises(IOError):
             mockassignment = detektor.set_detektor_signature_on_single_object(
-                mockassignment, 'f.path')
+                'python', mockassignment, 'f.path')
