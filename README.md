@@ -14,6 +14,9 @@ in files are high based on a couple of techniques described below.
 Use command `fab demo` and look at these files:
 
 * [demo1.py](demo1.py)
+* [demo2.py](demo2.py)
+* [demo3.py](demo3.py)
+* [demo4.py](demo4.py)
 
 ## Install
 
