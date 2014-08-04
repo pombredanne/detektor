@@ -1,3 +1,8 @@
+"""High level abstraction of the detektor common functions.
+
+
+
+"""
 from libs.codeparser import Parser
 from libs.comparer import Comparer
 from libs.detektor_signature import DetektorSignature
@@ -40,9 +45,7 @@ def set_detektor_signature(obj, filepath_attribute):
 
 
 def get_detektor_signature_from_file(filepath):
-    """
-
-    """
+    """Reads a file and returns a detektor signature as dict. """
     filehandler = open(filepath, 'r')
     p = Parser('python', filehandler)
     return p.get_code_signature()
