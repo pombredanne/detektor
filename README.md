@@ -9,6 +9,14 @@ Created to find similarities of a set of code files. Used to compare a set of
 hand-ins in programming education courses, and can report if similarity of code
 in files are high based on a couple of techniques described below.
 
+## Install
+
+This package is planned added to pypi, but for now:
+
+    $ git clone git@github.com:apparator/detektor.git
+
+No virtualenv? Currently this package uses standard Python modules only.
+
 ## Usage
 
 Use command `fab demo` and look at these files:
@@ -17,14 +25,6 @@ Use command `fab demo` and look at these files:
 * [demo2.py](demo2.py)
 * [demo3.py](demo3.py)
 * [demo4.py](demo4.py)
-
-## Install
-
-This package is planned added to pypi, but for now:
-
-    $ git clone git@github.com:apparator/detektor.git
-
-No virtualenv? Currently this package uses standard Python modules only.
 
 ## Run demo
 
@@ -39,7 +39,7 @@ No virtualenv? Currently this package uses standard Python modules only.
 Detektor is implemented in Python, and it is designed for easy adding of
 functionality. Currently, it only finds similarities in programs written in the
 Python and Perl programming languages, but adding support for new languages
-should be straightforward. For any programming language, including assembler
+should be straightforward. It should also work for assembler
 languages and 'home-made' languages especially developed for education purposes.
 
 To find similarities, the only thing that is kept from a program is the keywords
