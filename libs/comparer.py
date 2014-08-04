@@ -12,7 +12,7 @@ class Comparer:
     def do_the_work(self):
         self.point_dict = {}
         self.avg_points_dict = {}
-
+        sum_points = 0
         for i in range(0, len(self.programs), 1):
             for j in range(i + 1, len(self.programs), 1):
                 sum_points, details = self.compare(self.programs[i], self.programs[j])
