@@ -1,16 +1,15 @@
 #!/bin/sh
-""":"
-exec python $0 ${1+"$@"}
-"""#"
 
-import re, sys
+import re
+import sys
 from time import sleep
+from cStringIO import StringIO
 
-# The code in this file really should have been reimplemented! # 
 
 def error(s):
     print s
     sleep(0.3)
+
 
 def add_enddef(language, filehandler):
     #filesuffix = file[-2:]
@@ -19,11 +18,9 @@ def add_enddef(language, filehandler):
     elif language == 'perl':
         return add_enddef_perl(filehandler)
 
-def add_enddef_perl(filehandler):
-    #f = open(file, 'r')
-    tmp_file = "tmp_with_enddef.py"
-    fout = open(tmp_file, 'w')
 
+def add_enddef_perl(filehandler):
+    fout = StringIO()
     line = filehandler.readline()
     while line:
         match = re.search(r"(^|\s+)sub\s+\w+", line)
@@ -46,12 +43,11 @@ def add_enddef_perl(filehandler):
                     line = line[:char_number] + "enddef " + line[char_number:]
                     break
                 fout.write(line)
-                line = f.readline()
+                line = filehandler.readline()
         fout.write(line)
         line = filehandler.readline()
     filehandler.close()
-    fout.close()
-    fout = open(tmp_file, 'r')
+    fout.seek(0)
     return fout
         
         
@@ -124,12 +120,7 @@ def add_enddef_python(filehandler):
                         empty_lines = 0
                 i += 1
             
-    tmp_file = "tmp_with_enddef.py"
-    fout = open(tmp_file, 'w')
-    for l in lines:
-        fout.write(l)
-    fout.close()
-    return open(tmp_file, 'r')
+    return StringIO('\n'.join(lines))
                               
 if __name__ == '__main__':
     try:
