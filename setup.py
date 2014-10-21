@@ -11,6 +11,7 @@ setup(
     zip_safe=False,
     include_package_data=True,
     install_requires=['setuptools'],
+    test_suite='detektor.tests',
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',

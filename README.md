@@ -9,14 +9,9 @@ Created to find similarities of a set of code files. Used to compare a set of
 hand-ins in programming education courses, and can report if similarity of code
 in files are high based on a couple of techniques described below.
 
-## Install for development
+## Install
 
-This package is planned added to pypi, but for now:
-
-    $ git clone git@github.com:apparator/detektor.git
-    $ mkvirtualenv detektor
-    $ pip install -r requirements.txt
-
+    $ pip install detektor
 
 ## Usage
 
@@ -29,11 +24,10 @@ Use command `fab demo` and look at these files:
 
 ## Run demo
 
-    $ fab demo
+Check out the repo from https://github.com/appressoas/detektor, and run:
 
-## Run tests
-
-    $ fab test
+    $ python demos/demo1.py
+    ... also try demo2, demo3 and demo4
 
 ## Details
 
@@ -77,4 +71,14 @@ the new language, the filesuffix to look for, and the name of the file with the
 reserved words and the operators.
 
 
+## Develop detektor
 
+Install:
+
+    $ git clone git@github.com:apparator/detektor.git
+    $ mkvirtualenv detektor
+    $ python setup.py develop
+
+Run tests:
+
+    $ python setup.py test
