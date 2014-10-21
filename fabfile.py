@@ -1,11 +1,5 @@
 import logging
-import os
-import sys
 from fabric.api import local
-
-DETEKTOR = os.path.dirname(__file__)
-os.environ.update({'DETEKTOR': DETEKTOR})
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 def test():
