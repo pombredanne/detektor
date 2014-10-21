@@ -8,28 +8,32 @@ import logging
 from detektor.libs.defgetter import defgetter
 
 DEBUG = 1
+logger = logging.getLogger(__name__)
 
 #########################################################
 ######### STUFF THAT SHOULD BE DONE ON IMPORT ###########
 #########################################################
 
-datadir = os.environ['DETEKTOR'] + "/dat/"
+default_data_directory = os.path.join(
+    os.path.dirname(__file__), 'default_data_directory')
+datadir = os.environ.get('DETEKTOR_DATA_DIRECTORY', default_data_directory)
 
 # get info about supported languages
-f = open(datadir + "supported_languages.dat", 'r')
-languages = []
-for line in f:
-    languages.append(line.replace('\n', '').split())
-f.close()
+with open(os.path.join(datadir, "supported_languages.dat"), 'r') as supported_languages_file:
+    languages = []
+    for line in supported_languages_file:
+        languages.append(line.replace('\n', '').split())
 
-logging.debug('LANGUAGES: {}'.format(languages))
+logger.debug('LANGUAGES: {}'.format(languages))
+
+
 # Get keywords and operators for the supported languages
 
 # Make dictionaries for saving operators for each language
 operators = {}
 keywords = {}
 
-logging.debug('Languages: {}'.format(languages))
+logger.debug('Languages: {}'.format(languages))
 
 for lang in languages:
     # put an empty list in dictionaries
@@ -38,27 +42,26 @@ for lang in languages:
     keyws = ''
     ops = ''
     try:
-        f = open(datadir + lang[2], 'r')
-    except:
-        logging.exception('Could not open {} {}'.format(datadir, lang[2]))
-        sys.exit(1)
+        language_definition_file = open(os.path.join(datadir, lang[2]), 'r')
+    except IOError:
+        raise SystemExit('Could not open {} {}'.format(datadir, lang[2]))
+    else:
+        language_definition_file.readline()  # read past the tag 'KEYWORDS:'
+        while language_definition_file:
+            line = language_definition_file.readline()
+            if fnmatch.fnmatch(line, 'OPERATORS:*'):
+                break
+            keyws += " " + line
+        keywords[lang[0]] = keyws.split()
+        line = language_definition_file.readline()
+        while line:
+            ops = ops + " " + line
+            line = language_definition_file.readline()
+        operators[lang[0]] = ops.split()
+        language_definition_file.close()
 
-    f.readline()  # read past the tag 'KEYWORDS:'
-    while f:
-        line = f.readline()
-        if fnmatch.fnmatch(line, 'OPERATORS:*'):
-            break
-        keyws += " " + line
-    keywords[lang[0]] = keyws.split()
-    line = f.readline()
-    while line:
-        ops = ops + " " + line
-        line = f.readline()
-    operators[lang[0]] = ops.split()
-    f.close()
-
-logging.debug('KEYWORDS: {}'.format(keywords))
-logging.debug('OPERATORS: {}'.format(operators))
+logger.debug('KEYWORDS: {}'.format(keywords))
+logger.debug('OPERATORS: {}'.format(operators))
 
 
 ############ Add multicharacter operators to wordchars ################

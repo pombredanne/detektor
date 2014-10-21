@@ -1,3 +1,4 @@
+import logging
 import os
 import sys
 from fabric.api import local
@@ -9,6 +10,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 def test():
     import unittest
+    logging.basicConfig(level=logging.DEBUG)
     testsuite = unittest.TestLoader().discover('test')
     unittest.TextTestRunner(verbosity=1).run(testsuite)
 
