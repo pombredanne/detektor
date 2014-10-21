@@ -9,7 +9,7 @@ from detektor.libs.codeparser import Parser
 class TestParserParseFile(unittest.TestCase):
 
     def setUp(self):
-        self.testfilehandler = open('test/pyfiles/helloworldplus.py', 'r')
+        self.testfilehandler = open('detektor/tests/pyfiles/helloworldplus.py', 'r')
         self.p = Parser('python', self.testfilehandler)
 
     def tearDown(self):

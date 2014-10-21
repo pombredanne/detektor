@@ -9,8 +9,8 @@ import test_helpers
 
 class TestDetektorCompare(unittest.TestCase):
     def setUp(self):
-        self.a1 = test_helpers.Assignment('test/pyfiles/helloworldplus.py')
-        self.a2 = test_helpers.Assignment('test/pyfiles/helloworldplus2.py')
+        self.a1 = test_helpers.Assignment('detektor/tests/pyfiles/helloworldplus.py')
+        self.a2 = test_helpers.Assignment('detektor/tests/pyfiles/helloworldplus2.py')
         self.assignments = [self.a1, self.a2]
         detektor.set_detektor_signature('python', self.assignments, 'fileclass.filepath')
 
@@ -24,16 +24,16 @@ class TestDetektorCompare(unittest.TestCase):
         self.assertEqual(len(res), 0)
 
     def test_compare_3_equal_files(self):
-        a3 = test_helpers.Assignment('test/pyfiles/helloworldplus3.py')
+        a3 = test_helpers.Assignment('detektor/tests/pyfiles/helloworldplus3.py')
         self.assignments.append(a3)
         detektor.set_detektor_signature('python', self.assignments, 'fileclass.filepath')
         res = detektor.compare(self.assignments)
         self.assertEqual(len(res), 3)
 
     def test_compare_4_equal_files(self):
-        a3 = test_helpers.Assignment('test/pyfiles/helloworldplus3.py')
+        a3 = test_helpers.Assignment('detektor/tests/pyfiles/helloworldplus3.py')
         self.assignments.append(a3)
-        a4 = test_helpers.Assignment('test/pyfiles/helloworldplus4.py')
+        a4 = test_helpers.Assignment('detektor/tests/pyfiles/helloworldplus4.py')
         self.assignments.append(a4)
         detektor.set_detektor_signature('python', self.assignments, 'fileclass.filepath')
         res = detektor.compare(self.assignments)

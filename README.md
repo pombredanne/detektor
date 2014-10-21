@@ -14,7 +14,8 @@ in files are high based on a couple of techniques described below.
 This package is planned added to pypi, but for now:
 
     $ git clone git@github.com:apparator/detektor.git
-    $ python setup.py develop
+    $ mkvirtualenv detektor
+    $ pip install -r requirements.txt
 
 
 ## Usage

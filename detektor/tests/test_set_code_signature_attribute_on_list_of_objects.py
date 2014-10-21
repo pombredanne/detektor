@@ -14,7 +14,7 @@ class MockAssignment(object):
 
 class TestSetSignatureOnListOfObjects(unittest.TestCase):
     def setUp(self):
-        filepath = 'test/pyfiles/helloworldplus.py'
+        filepath = 'detektor/tests/pyfiles/helloworldplus.py'
         self.mockassignment = MockAssignment(filepath)
         self.assignments = [
             self.mockassignment,

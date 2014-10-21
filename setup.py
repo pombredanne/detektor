@@ -7,9 +7,7 @@ setup(
     url='https://github.com/appressoas/detektor',
     author='Magne Westlie',
     license='GPL',
-    packages=find_packages(
-        exclude=[
-        ]),
+    packages=find_packages(),
     zip_safe=False,
     include_package_data=True,
     install_requires=['setuptools'],

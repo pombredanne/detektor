@@ -17,7 +17,7 @@ signature_keys = [
 
 class TestGetDetektorSignatureFromFile(unittest.TestCase):
     def setUp(self):
-        self.filepath = 'test/pyfiles/helloworldplus.py'
+        self.filepath = 'detektor/tests/pyfiles/helloworldplus.py'
 
     def test_get_detektor_signature_from_file(self):
         sign = detektor.get_detektor_signature_from_file('python', self.filepath)

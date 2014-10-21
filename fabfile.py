@@ -5,7 +5,7 @@ from fabric.api import local
 def test():
     import unittest
     logging.basicConfig(level=logging.DEBUG)
-    testsuite = unittest.TestLoader().discover('test')
+    testsuite = unittest.TestLoader().discover('detektor/tests')
     unittest.TextTestRunner(verbosity=1).run(testsuite)
 
 

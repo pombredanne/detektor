@@ -9,7 +9,7 @@ from detektor.libs.codeparser import Parser
 class GetParserGetSignature(unittest.TestCase):
 
     def setUp(self):
-        self.testfilehandler = open('test/pyfiles/helloworldplus.py', 'r')
+        self.testfilehandler = open('detektor/tests/pyfiles/helloworldplus.py', 'r')
         p = Parser('python', self.testfilehandler)
         self.detektor_signature = p.get_code_signature()
 
