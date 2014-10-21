@@ -55,3 +55,6 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 
+# Ignore user-specific pycharm settings
+.idea/workspace.xml
+.idea/tasks.xml
