@@ -82,3 +82,8 @@ Install:
 Run tests:
 
     $ python setup.py test
+
+
+Update the pypi package (requires admin rights for the pypi package):
+
+    $ python setup.py sdist upload

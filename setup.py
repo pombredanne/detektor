@@ -6,6 +6,7 @@ setup(
     version='1.0.0-beta.001',
     url='https://github.com/appressoas/detektor',
     author='Magne Westlie',
+    author_email='magne@appresso.no',
     license='GPL',
     packages=find_packages(),
     zip_safe=False,
