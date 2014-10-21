@@ -1,7 +1,9 @@
+import os
+
 
 class ReportGen:
     def __init__(self, rdir, dir, filename):
-        self.f = open(rdir+"/"+filename, 'w')
+        self.f = open(os.path.join(rdir, filename), 'w')
         self.directory = dir
         self.items = []
         
@@ -93,10 +95,10 @@ The Detector was implemented by Magne Westlie (magnew@simula.no)
         self.f.close()
 
     def make_diff_page(self, file, s1, s2):
-        fp = open((self.directory+"/"+s1+"/"+file), 'r')
+        fp = open(os.path.join(self.directory, s1, file), 'r')
         s1_lines = fp.readlines()
         fp.close()
-        fp = open((self.directory+"/"+s2+"/"+file), 'r')
+        fp = open(os.path.join(self.directory, s2, file), 'r')
         s2_lines = fp.readlines()
         fp.close()
         self.f.write("""
