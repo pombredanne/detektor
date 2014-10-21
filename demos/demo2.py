@@ -18,7 +18,10 @@ import detektor
 
 
 class Assignment(object):
-    filepath = os.path.abspath('./demo_files/donny/helloworldplus.py')
+    filepath = os.path.abspath(
+        os.path.join(os.path.dirname(__file__), 'demo_files', 'donny', 'helloworldplus.py'))
+
+
 
 a = Assignment()
 detektor.set_detektor_signature('python', a, 'filepath')

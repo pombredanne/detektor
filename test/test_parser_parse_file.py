@@ -3,7 +3,7 @@ import sys
 import unittest
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from libs.codeparser import Parser
+from detektor.libs.codeparser import Parser
 
 
 class TestParserParseFile(unittest.TestCase):

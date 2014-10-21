@@ -3,7 +3,8 @@ import sys
 import glob
 import detektor
 
-os.chdir('demo_files')
+demo_files_directory = os.path.abspath(os.path.join(os.path.dirname(__file__), 'demo_files'))
+os.chdir(demo_files_directory)
 dirlist = glob.glob('*')
 
 dirlist = [d for d in dirlist if os.path.isdir(d)]

@@ -20,7 +20,8 @@ import os
 import pprint
 import detektor
 
-filepath = os.path.abspath('./demo_files/donny/helloworldplus.py')
+filepath = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), 'demo_files', 'donny', 'helloworldplus.py'))
 
 print 'Get signature for file "{}"'.format(filepath)
 code_signature = detektor.get_detektor_signature_from_file('python', filepath)

@@ -3,9 +3,9 @@
 
 
 """
-from libs.codeparser import Parser
-from libs.comparer import Comparer
-from libs.detektor_signature import DetektorSignature
+from detektor.libs.codeparser import Parser
+from detektor.libs.comparer import Comparer
+from detektor.libs.detektor_signature import DetektorSignature
 
 
 def get_deep_attr(obj, attrs):

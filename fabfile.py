@@ -18,4 +18,4 @@ def demo(num=0):
     if not num in (1, 2, 3, 4):
         print 'Choose demo 1, 2, 3 or 4. Run with e.g "fab demo:1"'
         return
-    local('python demo{}.py'.format(num))
+    local('python demos/demo{}.py'.format(num))

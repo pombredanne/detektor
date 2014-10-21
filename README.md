@@ -9,13 +9,13 @@ Created to find similarities of a set of code files. Used to compare a set of
 hand-ins in programming education courses, and can report if similarity of code
 in files are high based on a couple of techniques described below.
 
-## Install
+## Install for development
 
 This package is planned added to pypi, but for now:
 
     $ git clone git@github.com:apparator/detektor.git
+    $ python setup.py develop
 
-No virtualenv? Currently this package uses standard Python modules only.
 
 ## Usage
 

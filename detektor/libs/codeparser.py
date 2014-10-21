@@ -5,7 +5,7 @@ import os
 import fnmatch
 import logging
 
-from libs.defgetter import defgetter
+from detektor.libs.defgetter import defgetter
 
 DEBUG = 1
 

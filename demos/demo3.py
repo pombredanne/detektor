@@ -15,6 +15,9 @@ import os
 import detektor
 
 
+demo_files_directory = os.path.abspath(os.path.join(os.path.dirname(__file__), 'demo_files'))
+
+
 class FileClass(object):
     def __init__(self, filepath):
         self.filepath = filepath
@@ -22,12 +25,14 @@ class FileClass(object):
 
 class AssignmentDonny(object):
     def __init__(self):
-        self.fileclass = FileClass(os.path.abspath('demo_files/donny/helloworldplus.py'))
+        self.fileclass = FileClass(
+            os.path.join(demo_files_directory, 'donny', 'helloworldplus.py'))
 
 
 class AssignmentLarry(object):
     def __init__(self):
-        self.fileclass = FileClass(os.path.abspath('demo_files/larry/helloworldplus.py'))
+        self.fileclass = FileClass(
+            os.path.join(demo_files_directory, 'larry', 'helloworldplus.py'))
 
 
 assignments = [
