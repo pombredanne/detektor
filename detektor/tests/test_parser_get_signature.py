@@ -56,6 +56,26 @@ class GetParserGetSignaturePythonDetails(unittest.TestCase):
         self.assertEquals(signature['number_of_keywords'], 0)
         self.assertEquals(signature['number_of_operators'], 0)
 
+    def test_keywords(self):
+        testfilehandler = StringIO('print "hello world"\nif a == 20')
+        p = Parser('python', testfilehandler)
+        signature = p.get_code_signature()
+        print(signature)
+        self.assertEquals(signature['number_of_keywords'], 2)
+
+    def test_operators(self):
+        testfilehandler = StringIO('a == 10 and b > 20 or c < 30')
+        p = Parser('python', testfilehandler)
+        signature = p.get_code_signature()
+        print(signature)
+        self.assertEquals(signature['number_of_operators'], 3)
+
+    def test_bigstring(self):
+        testfilehandler = StringIO('print "hello world"\nif a == 20')
+        p = Parser('python', testfilehandler)
+        signature = p.get_code_signature()
+        self.assertEquals(signature['bigstring'], 'printif==')
+
     def test_only_function(self):
         testfilehandler = StringIO('def test(): pass')
         p = Parser('python', testfilehandler)
@@ -63,3 +83,4 @@ class GetParserGetSignaturePythonDetails(unittest.TestCase):
         print signature
         # self.assertEquals(signature['number_of_keywords'], 0)
         # self.assertEquals(signature['number_of_operators'], 0)
+
