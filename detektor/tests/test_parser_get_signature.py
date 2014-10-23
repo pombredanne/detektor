@@ -1,20 +1,26 @@
 import os
 import sys
 import unittest
+from cStringIO import StringIO
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from detektor.libs.codeparser import Parser
 
 
-class GetParserGetSignature(unittest.TestCase):
+class GetParserGetSignatureSanity(unittest.TestCase):
 
     def setUp(self):
-        self.testfilehandler = open('detektor/tests/pyfiles/helloworldplus.py', 'r')
+        self.testfilehandler = StringIO("""import os
+
+def add(a, b):
+    return a + b
+
+print 'Hello %s!' % 'world'
+a = 1
+print '%s + %s equals %s' % (a, a, add(a, a))
+        """)
         p = Parser('python', self.testfilehandler)
         self.detektor_signature = p.get_code_signature()
-
-    def tearDown(self):
-        self.testfilehandler.close()
 
     def testGetPythonContentFileSignature(self):
         self.assertEqual(type(self.detektor_signature), dict)
@@ -39,3 +45,21 @@ class GetParserGetSignature(unittest.TestCase):
 
     def testGetPythonContentFileSignatureHasnumber_of_operators(self):
         self.assertTrue('number_of_operators' in self.detektor_signature)
+
+
+class GetParserGetSignaturePythonDetails(unittest.TestCase):
+
+    def test_empty_file(self):
+        testfilehandler = StringIO('')
+        p = Parser('python', testfilehandler)
+        signature = p.get_code_signature()
+        self.assertEquals(signature['number_of_keywords'], 0)
+        self.assertEquals(signature['number_of_operators'], 0)
+
+    def test_only_function(self):
+        testfilehandler = StringIO('def test(): pass')
+        p = Parser('python', testfilehandler)
+        signature = p.get_code_signature()
+        print signature
+        # self.assertEquals(signature['number_of_keywords'], 0)
+        # self.assertEquals(signature['number_of_operators'], 0)
