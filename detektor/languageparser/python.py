@@ -1,4 +1,3 @@
-import re
 from detektor.codefilter.normalizeoperatorwhitespace import NormalizeOperatorWhitespace
 from detektor.languageparser.shlexparser import ShlexLanguageParserBase
 import keyword
@@ -6,7 +5,8 @@ import keyword
 
 class PythonLanguageParser(ShlexLanguageParserBase):
     operators = {
-        '+', '-', '*', '**', '/', '//', '%', '<<', '>>', '&', '|',
+        '!', '+', '-', '*', '**', '/', '//', '%', '<<', '>>', '&', '|',
+        '%=', '/=', '//=', '**=',
         '^', '~', '<', '>', '<=', '>=', '==', '!=', '<>',
     }
     keywords = set(keyword.kwlist)
