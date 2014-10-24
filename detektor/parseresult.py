@@ -12,29 +12,46 @@ class ParseResult(object):
                 Used to name functions in the list of functions
                 when the codeblocktype is ``function``.
         """
-        self.set_of_all_operators = set_of_all_operators
-        self.set_of_all_keywords = set_of_all_keywords
         self.codeblocktype = codeblocktype
         self.label = label
 
-        #: List of keywords in the order they occur in the sourcecode
-        self.keywords = []
+        #: Dict mapping keywords to the number of occurrences of that keyword
+        self.keywords = dict.fromkeys(set_of_all_keywords, 0)
 
-        #: List of operators in the order they occur in the sourcecode
-        self.operators = []
+        #: Dict mapping operators to the number of occurrences of that operator
+        self.operators = dict.fromkeys(set_of_all_operators, 0)
+
+        #: Number of operators
+        self.number_of_operators = 0
+
+        #: Number of keywords
+        self.number_of_keywords = 0
+
+        #: A string with all the operators and keywords appended in the order
+        #: they occur in the code. Handled automatically in :meth:`.add_keyword`
+        #: and :meth:`.add_operator`, so you should not have to edit this.
+        self.operators_and_keywords_string = u''
 
         #: Should be a string that when compared with another ParseResult
         #: means that the ParseResults are very similar if they match.
-        self.normalized_sourcecode = u''
+        #: This is typically populated by a smart language parser that
+        #: normalizes sourcecode in a way that makes it very unlikely that
+        #: programs differ if this string is 100% equal in two programs.
+        #: If the language does not use this, it should be left as ``None``,
+        #: to indicate that this should be ignored when comparing programs.
+        self.normalized_sourcecode = None
 
         #: List of ParseResult objects - one for each parsed function.
         #: This is only used when ``codeblocktype`` is ``program``.
         self.parsed_functions = []
 
     def __unicode__(self):
-        return u'ParserResult(={keywords!r}, operators={operators!r})'.format(
-            keywords=self.keywords,
-            operators=self.operators)
+        return \
+            u'ParserResult('\
+            u'keywords={keywords!r}, '\
+            u'operators={operators!r})'.format(
+                keywords=self.keywords,
+                operators=self.operators)
 
     def __str__(self):
         return unicode(self).encode('ascii', 'replace')
@@ -46,10 +63,14 @@ class ParseResult(object):
         return self.codeblocktype == 'program'
 
     def add_keyword(self, keyword):
-        self.keywords.append(keyword)
+        self.number_of_keywords += 1
+        self.keywords[keyword] += 1
+        self.operators_and_keywords_string += keyword
 
     def add_operator(self, operator):
-        self.operators.append(operator)
+        self.number_of_operators += 1
+        self.operators[operator] += 1
+        self.operators_and_keywords_string += operator
 
     ## TODO: Port this from the old codeparser
     # def get_code_signature(self):
@@ -64,19 +85,3 @@ class ParseResult(object):
     #         'number_of_operators': num_op,
     #         'list_of_functions': list_of_functions,
     #     }
-
-
-class DumbParseResult(ParseResult):
-    """
-    If you do not have a smart way of creating the ``normalized_sourcecode``
-    attribute of :class:`.ParseResult`, you can use this class to just
-    create it automatically from the operators and keywords.
-    """
-
-    def add_keyword(self, keyword):
-        super(DumbParseResult, self).add_keyword(keyword)
-        self.normalized_sourcecode += keyword
-
-    def add_operator(self, operator):
-        super(DumbParseResult, self).add_operator(operator)
-        self.normalized_sourcecode += operator

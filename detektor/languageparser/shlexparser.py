@@ -1,7 +1,7 @@
 import shlex
 
 from detektor.languageparser.base import LanguageParserBase
-from detektor.parseresult import ParseResult, DumbParseResult
+from detektor.parseresult import ParseResult
 
 
 class ShlexLanguageParserBase(LanguageParserBase):
@@ -17,7 +17,7 @@ class ShlexLanguageParserBase(LanguageParserBase):
         super(ShlexLanguageParserBase, self).__init__()
 
     def get_parseresultclass(self):
-        return DumbParseResult
+        return ParseResult
 
     def make_parseresult(self, codeblocktype='program', label=None):
         parseresult_class = self.get_parseresultclass()

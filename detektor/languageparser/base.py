@@ -1,4 +1,3 @@
-from detektor.parseresult import DumbParseResult
 
 
 class LanguageParserBase(object):
