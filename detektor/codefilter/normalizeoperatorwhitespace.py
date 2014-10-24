@@ -8,6 +8,9 @@ class NormalizeOperatorWhitespace(CodeFilterBase):
     and their surrounding code.
 
     Makes simple lexers like shlex treat the opeators as words.
+
+    Requires the language parser object to have ``operators`` and
+    ``keywords`` attributes (see :class:`detektor.languageparser.shlexparser.ShlexLanguageParserBase`)
     """
     def __init__(self, languageparser):
         super(NormalizeOperatorWhitespace, self).__init__(languageparser)
