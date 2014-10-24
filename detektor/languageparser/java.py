@@ -1,5 +1,6 @@
 from detektor.codefilter.normalizeoperatorwhitespace import NormalizeOperatorWhitespace
 from detektor.languageparser.shlexparser import ShlexLanguageParserBase
+from detektor.functionextractor.clike import ClikeFunctionExtractor
 
 
 class JavaLanguageParser(ShlexLanguageParserBase):
@@ -27,3 +28,10 @@ class JavaLanguageParser(ShlexLanguageParserBase):
     sourcecode_preprocessor_classes = [
         NormalizeOperatorWhitespace
     ]
+
+    def __init__(self, *args, **kwargs):
+        super(JavaLanguageParser, self).__init__(*args, **kwargs)
+        self.function_extractor = ClikeFunctionExtractor(keywords=self.keywords)
+
+    def extract_functionsourcecode(self, sourcecode):
+        return self.function_extractor.extract(sourcecode)
