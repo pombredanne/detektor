@@ -1,30 +1,36 @@
 from detektor.languageparser.python import PythonLanguageParser
 
 
+default_languageparsers = {
+    # 'java': JavaLanguageParser,
+    'python': PythonLanguageParser,
+}
 
-class Parser(object):
-    default_languageparsers = {
-        # 'java': JavaLanguageParser,
-        'python': PythonLanguageParser,
-    }
+def make_parser(language):
+    """
+    Make a Detektor language parser for the given language.
 
-    def __init__(self, language, sourcecode):
-        self.language = language
-        self.sourcecode = sourcecode
+    Example::
 
-    def parse(self):
-        """
-        Parse the sourcecode and return the results as a :class:`.ParserResult` object.
-        """
-        languageparser_class = self.get_languageparser()
-        return languageparser_class(self.sourcecode).parse()
+        parser = make_parser('python')
+        sourcecodes = [
+            'print "hello world"',
+            'print "This is a test"'
+        ]
 
-    def get_languageparser(self):
-        """
-        Create a subclass of this class, and override this method to
-        add custom language parsers or to replace the default language parsers.
+        # Treat both the sourcecodes as a single "program",
+        # and collect the results in a single ParseResult object:
+        parseresult = parser.make_parseresult()
+        for sourcecode in sourcecodes:
+            parser.parse(sourcecode, parseresult)
+        print parseresult
 
-        Returns:
-            A :class:`detektor.languageparser.base.LanguageParserBase` subclass.
-        """
-        return self.default_languageparsers[self.language]
+        # ... or treat them as separate programs:
+        results = []
+        for sourcecode in sourcecodes:
+            parseresult = parser.make_parseresult()
+            parser.parse(sourcecode, parseresult)
+            results.append(parseresult)
+
+    """
+    return default_languageparsers[language]()
