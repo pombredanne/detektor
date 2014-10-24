@@ -13,7 +13,7 @@ class JavaLanguageParser(ShlexLanguageParserBase):
     # http://docs.oracle.com/javase/tutorial/java/nutsandbolts/_keywords.html
     keywords = {
         'abstract', 'continue', 'for', 'new', 'switch',
-        'assert***', 'default', 'package', 'synchronized',
+        'assert', 'default', 'package', 'synchronized',
         'boolean', 'do', 'if', 'private', 'this',
         'break', 'double', 'implements', 'protected', 'throw',
         'byte', 'else', 'import', 'public', 'throws',
