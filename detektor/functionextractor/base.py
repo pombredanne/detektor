@@ -1,4 +1,31 @@
 
+class ExtractedFunction(object):
+    def __init__(self, name, sourcecode):
+        """
+        Parameters:
+            name (unicode): The name of the function.
+             Should contain as much unique info as possible about
+             the function. This means that for languages where
+             a function with the same name but different arguments
+             or return types denotes separate functions, the arguments and return
+             type should be included in the name. Should not contain any newlines,
+             and all whitespace should be collapsed to a single space.
+            description (unicode): The sourcecode of the function.
+              This should not include the signature, only the body of the
+              function.
+        """
+        self.name = name
+        self.sourcecode = sourcecode
+
+    def __unicode__(self):
+        return u'{} {}'.format(self.name, self.sourcecode)
+
+    def __str__(self):
+        return unicode(self).encode('ascii', 'replace')
+
+    def __repr__(self):
+        return 'ExtractedFunction({})'.format(self)
+
 
 class BaseFunctionExtractor(object):
     """
@@ -10,12 +37,7 @@ class BaseFunctionExtractor(object):
     def extract(self, sourcecode):
         """
         Extract the functions in ``sourcecode`` and return the result as a
-        list of ``(functionname, sourcecode)`` where:
-
-            - ``functionname`` should be an as good as possible label for the
-              function. This means that a method optimally should include the
-              full path including any namespace, class name and arguments if possible.
-            - ``sourcecode`` should be the sourcecode comprising the body of the function.
+        list of :class:`ExtractedFunction` objects.
 
         Must be overridden in subclasses.
         """

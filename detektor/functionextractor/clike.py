@@ -1,5 +1,6 @@
 import re
 from detektor.functionextractor.base import BaseFunctionExtractor
+from detektor.functionextractor.base import ExtractedFunction
 
 
 class ClikeFunctionExtractor(BaseFunctionExtractor):
@@ -29,8 +30,8 @@ class ClikeFunctionExtractor(BaseFunctionExtractor):
                 function_startindex = match.end()
                 function_endindex = self._find_function_end(sourcecode, function_startindex)
                 function_sourcecode = sourcecode[function_startindex:function_endindex]
-                functions.append((
-                    u'{returntype} {name}({arguments})'.format(**match.groupdict()),
-                    function_sourcecode
+                functions.append(ExtractedFunction(
+                    name=u'{returntype} {name}({arguments})'.format(**match.groupdict()),
+                    sourcecode=function_sourcecode
                 ))
         return functions

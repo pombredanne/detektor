@@ -1,11 +1,10 @@
 import unittest
-import mock
 from detektor.functionextractor.clike import ClikeFunctionExtractor
 
 
 class TestClikeFunctionExtractor(unittest.TestCase):
 
-    def test_something(self):
+    def test_extract_function(self):
         keywords = {
             'if', 'while'
         }
@@ -25,7 +24,8 @@ class TestClikeFunctionExtractor(unittest.TestCase):
                 }
             }
         """)
-        for functionname, sourcecode in functions:
-            print '-' * 70
-            print functionname
-            print sourcecode
+        self.assertEquals(len(functions), 3)
+        self.assertEquals(functions[0].name, 'void main(int i)')
+        self.assertEquals(functions[1].name, 'int[] test()')
+        self.assertEquals(functions[2].name, 'Array<String> anotherTest()')
+        self.assertEquals(functions[0].sourcecode.strip(), '// Some code here')
