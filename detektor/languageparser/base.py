@@ -17,7 +17,7 @@ class LanguageParserBase(object):
         ]
 
         # Treat both the sourcecodes as a single "program",
-        # and collect the results in a single ParseResult object:
+        # and collect the results in a single EditableParseResult object:
         parseresult = parser.make_parseresult()
         for sourcecode in sourcecodes:
             parser.parse(sourcecode, parseresult)
@@ -51,7 +51,7 @@ class LanguageParserBase(object):
         Parameters:
             sourcecode: The source code to parse.
             codeblocktype: Describes what the sourcecode is. Must be one of: "program", "function".
-            label: A label that can be set to give the ParseResult a name/context.
+            label: A label that can be set to give the EditableParseResult a name/context.
                 Typically used to give functions a name, but can also be used when
                 ``codeblocktype`` is ``program``.
         """
@@ -70,12 +70,12 @@ class LanguageParserBase(object):
         """
         Parameters:
             codeblocktype: Describes what the sourcecode is. Must be one of: "program", "function".
-            label: A label that can be set to give the ParseResult a name/context.
+            label: A label that can be set to give the EditableParseResult a name/context.
                 Typically used to give functions a name, but can also be used when
                 ``codeblocktype`` is ``program``.
 
         Returns:
-            A :class:`detektor.parseresult.ParseResult` object.
+            A :class:`detektor.parseresult.EditableParseResult` object.
         """
         raise NotImplementedError()
 
@@ -114,7 +114,7 @@ class LanguageParserBase(object):
 
         Parameters:
             sourcecode: The sourcecode to parse as a string/unicode.
-            parseresult: A :class:`detector.parser_result.ParseResult` object.
+            parseresult: A :class:`detector.parser_result.EditableParseResult` object.
         """
         sourcecode = self.preprocess_sourcecode(sourcecode)
         self.parse_program(parseresult, sourcecode)
