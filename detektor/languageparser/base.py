@@ -103,7 +103,7 @@ class LanguageParserBase(object):
         for extractedfunction in self.extract_functionsourcecode(sourcecode):
             parseresult = self.make_parseresult(
                 codeblocktype='function', label=extractedfunction.name)
-            function_sourcecode_parser_class().parse(parseresult, extractedfunction.name)
+            function_sourcecode_parser_class().parse(parseresult, extractedfunction.sourcecode)
             parsed_functions.append(parseresult)
         return parsed_functions
 

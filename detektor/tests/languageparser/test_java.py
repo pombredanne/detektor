@@ -61,7 +61,11 @@ class TestJavaLanguageParser(unittest.TestCase):
         parser.parse(parseresult, 'a != 10')
         self.assertEquals(parseresult.operators['!='], 1)
 
-    def test_functions(self):
+    def test_parsed_functions(self):
+        # Note: Only a sanity test. This only needs to ensure that
+        # the function extracter is configured correctly, and that
+        # the parser is exectuted on the extracted functions. The function
+        # extracter and parser has their own tests.
         parser = JavaLanguageParser()
 
         parseresult = parser.make_parseresult()
@@ -74,9 +78,20 @@ class TestJavaLanguageParser(unittest.TestCase):
             private void printHello() {
                 System.out.println("Hello World!");
             }
+
+            void test(int i) {
+                if(i > 10) {
+                    return 1;
+                } else {
+                    return 2;
+                }
+            }
         }
         ''')
-        for functionresult in parseresult.parsed_functions:
-            print functionresult.label
-            print functionresult
-        # self.assertEquals(parseresult, 1)
+        self.assertEquals(len(parseresult.parsed_functions), 3)
+        self.assertEquals(parseresult.parsed_functions[0].label, 'void main(String[] args)')
+        self.assertEquals(parseresult.parsed_functions[1].label, 'void printHello()')
+        self.assertEquals(parseresult.parsed_functions[2].label, 'void test(int i)')
+        self.assertEquals(parseresult.parsed_functions[2].keywords['if'], 1)
+        self.assertEquals(parseresult.parsed_functions[2].keywords['else'], 1)
+        self.assertEquals(parseresult.parsed_functions[2].keywords['return'], 2)
