@@ -100,9 +100,10 @@ class LanguageParserBase(object):
     def parse_functions(self, sourcecode):
         function_sourcecode_parser_class = self.get_function_sourcecode_parser_class()
         parsed_functions = []
-        for functionname, functionsourcecode in self.extract_functionsourcecode(sourcecode):
-            parseresult = self.make_parseresult(codeblocktype='function', label=functionname)
-            function_sourcecode_parser_class().parse(functionsourcecode, parseresult)
+        for extractedfunction in self.extract_functionsourcecode(sourcecode):
+            parseresult = self.make_parseresult(
+                codeblocktype='function', label=extractedfunction.name)
+            function_sourcecode_parser_class().parse(parseresult, extractedfunction.name)
             parsed_functions.append(parseresult)
         return parsed_functions
 

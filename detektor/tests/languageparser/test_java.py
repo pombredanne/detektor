@@ -60,3 +60,23 @@ class TestJavaLanguageParser(unittest.TestCase):
         parseresult = parser.make_parseresult()
         parser.parse(parseresult, 'a != 10')
         self.assertEquals(parseresult.operators['!='], 1)
+
+    def test_functions(self):
+        parser = JavaLanguageParser()
+
+        parseresult = parser.make_parseresult()
+        parser.parse(parseresult, '''
+        public class Test {
+            public void main(String[] args) {
+                printHello();
+            }
+
+            private void printHello() {
+                System.out.println("Hello World!");
+            }
+        }
+        ''')
+        for functionresult in parseresult.parsed_functions:
+            print functionresult.label
+            print functionresult
+        # self.assertEquals(parseresult, 1)
