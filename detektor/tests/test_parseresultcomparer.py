@@ -95,6 +95,55 @@ class TestParseResultComparer(unittest.TestCase):
             ParseResultCompareTwo(a, b)._compare_total_keywordcount_equal(),
             'total_keywordcount_equal')
 
+    def test_compare_functions(self):
+        parsedfunction1 = mock.MagicMock()
+        parsedfunction1.get_number_of_keywords.return_value = 5
+        parsedfunction2 = mock.MagicMock()
+        parsedfunction2.get_number_of_keywords.return_value = 2
+        parsedfunction3 = mock.MagicMock()
+        parsedfunction3.get_number_of_keywords.return_value = 3
+        parsedfunction4 = mock.MagicMock()
+        parsedfunction4.get_number_of_keywords.return_value = 5
+
+        a = mock.MagicMock()
+        a.codeblocktype = 'program'
+        a.get_parsed_functions.return_value = [parsedfunction1, parsedfunction2]
+        b = mock.MagicMock()
+        b.codeblocktype = 'program'
+        b.get_parsed_functions.return_value = [parsedfunction3, parsedfunction4]
+        comparetwo = ParseResultCompareTwo(a, b)
+        functioncompare_summary = comparetwo._compare_functions()
+        self.assertEqual(functioncompare_summary, 'similar_functions')
+        self.assertEqual(comparetwo.functionpoints, 1)
+        self.assertEqual(comparetwo.points, 0)
+        self.assertEqual(comparetwo.get_scaled_points(), 1)
+
+    def test_compare_functions_complex(self):
+        parsedfunctionA1 = mock.MagicMock()
+        parsedfunctionA1.get_number_of_keywords.return_value = 5  # 1 point
+        parsedfunctionA1.get_operators_and_keywords_string.return_value = 'ifreturn'  # 10 points
+        parsedfunctionA2 = mock.MagicMock()
+        parsedfunctionA2.get_number_of_keywords.return_value = 2
+        parsedfunctionA2.get_operators_string.return_value = 'x'  # 3 points
+
+        parsedfunctionB1 = mock.MagicMock()
+        parsedfunctionB1.get_number_of_keywords.return_value = 3
+        parsedfunctionB1.get_operators_and_keywords_string.return_value = 'ifreturn'  # 10 points
+        parsedfunctionB2 = mock.MagicMock()
+        parsedfunctionB2.get_number_of_keywords.return_value = 5  # 1 point
+        parsedfunctionB2.get_operators_string.return_value = 'x'  # 3 points
+
+        a = mock.MagicMock()
+        a.codeblocktype = 'program'
+        a.get_parsed_functions.return_value = [parsedfunctionA1, parsedfunctionA2]
+        b = mock.MagicMock()
+        b.codeblocktype = 'program'
+        b.get_parsed_functions.return_value = [parsedfunctionB1, parsedfunctionB2]
+        comparetwo = ParseResultCompareTwo(a, b)
+        functioncompare_summary = comparetwo._compare_functions()
+        self.assertEqual(functioncompare_summary, 'similar_functions')
+        self.assertEqual(comparetwo.functionpoints, 14)
+
 
 class TestParseResultCompareMany(unittest.TestCase):
     def test_all_compared_single(self):

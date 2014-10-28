@@ -19,30 +19,47 @@ class ParseResultCompareTwo(object):
         'total_keywordcount_equal': {
             'points': 1,
             'label': 'Equal number total keywords.'
+        },
+        'similar_functions': {
+            # NOTE: No points for similar functions, they are collected
+            # for each similarity, and scaled according to
+            'label': 'Some of the functions look similar.'
         }
     }
 
-    def __init__(self, parseresult1, parseresult2, scale=100):
+    def __init__(self, parseresult1, parseresult2, scale=100, functionscale=1):
         """
         Parameters:
             parseresult1: A obj:`detektor.parseresult.ParseResults` object.
             parseresult2: A obj:`detektor.parseresult.ParseResults` object.
             scale (int): A number to multiply all the points produced on
-                matches by. Used internally to scale functions less than
-                whole programs.
+                matches.
+            functionscale (int): A number to multiply all the points produced on
+                matches in functions. Should normally be a fair bit smaller
+                than ``scale``.
         """
         self.parseresult1 = parseresult1
         self.parseresult2 = parseresult2
         self.scale = scale
+        self.functionscale = functionscale
 
         # Points are collected by the _compare() function.
         # When the comparison has completed, the number of points indicates
-        # how similar the two programs are
+        # how similar the two programs are.
+        # You normally get this via meth:`.get_scaled_points`.
         self.points = 0
+
+        # Just like ``self.points``, but collected when comparing functions.
+        # You normally get this via meth:`.get_scaled_points`.
+        self.functionpoints = 0
 
         #: List of matchids. We use get_description_for_matchid() to get a human
         #: readable string for a matchid.
         self.summary = []
+
+        #: List of :obj:`.ParseResultCompareTwo` objects for all
+        #: functions within the two ParseResult objects.
+        self.comparetwo_for_functions = []
 
     def __unicode__(self):
         return u'{parseresult1},{parseresult2} - Points: {points}, summary: {summary}'.format(
@@ -58,7 +75,7 @@ class ParseResultCompareTwo(object):
         return str(self)
 
     def get_scaled_points(self):
-        return self.points * self.scale
+        return self.points * self.scale + self.functionpoints * self.functionscale
 
     def get_summary_descriptions_as_list(self):
         return [self.get_description_for_matchid(matchid) for matchid in self.summary]
@@ -75,7 +92,7 @@ class ParseResultCompareTwo(object):
     def _add_match_if_matched(self, matchid):
         if matchid is not None:
             self.summary.append(matchid)
-            self.points += self.matchmap[matchid]['points']
+            self.points += self.matchmap[matchid].get('points', 0)
 
     def compare(self):
         self._add_match_if_matched(self._compare_operators_and_keywords_string_equal())
@@ -83,6 +100,8 @@ class ParseResultCompareTwo(object):
         self._add_match_if_matched(self._compare_keywords_string_equal())
         self._add_match_if_matched(self._compare_total_operatorcount_equal())
         self._add_match_if_matched(self._compare_total_keywordcount_equal())
+        if self.parseresult1.codeblocktype == 'program' and self.parseresult2.codeblocktype == 'program':
+            self._add_match_if_matched(self._compare_functions())
 
     def compares_parseresults(self, parseresulta, parseresultb):
         """
@@ -131,6 +150,22 @@ class ParseResultCompareTwo(object):
     def _compare_total_keywordcount_equal(self):
         if self.parseresult1.get_number_of_keywords() == self.parseresult2.get_number_of_keywords():
             return 'total_keywordcount_equal'
+        else:
+            return None
+
+    def _compare_functions(self):
+        self.comparetwo_for_functions = []
+        functionparseresults = self.parseresult1.get_parsed_functions()
+        for functionparseresult1 in self.parseresult1.get_parsed_functions():
+            for functionparseresult2 in self.parseresult2.get_parsed_functions():
+                comparetwo = ParseResultCompareTwo(
+                    functionparseresult1, functionparseresult2,
+                    scale=self.functionscale)
+                comparetwo.compare()
+                self.comparetwo_for_functions.append(comparetwo)
+                self.functionpoints += comparetwo.points
+        if self.functionpoints:
+            return 'similar_functions'
         else:
             return None
 
