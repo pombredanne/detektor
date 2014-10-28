@@ -45,7 +45,9 @@ class ParseResultCompareTwo(object):
         self.summary = []
 
     def __unicode__(self):
-        return u'Points: {points}, summary: {summary}'.format(
+        return u'{parseresult1},{parseresult2} - Points: {points}, summary: {summary}'.format(
+            parseresult1=self.parseresult1.label,
+            parseresult2=self.parseresult2.label,
             points=self.get_scaled_points(),
             summary=self.get_summary_descriptions_as_string())
 
@@ -79,6 +81,15 @@ class ParseResultCompareTwo(object):
         self._add_match_if_matched(self._compare_operators_and_keywords_string_equal())
         self._add_match_if_matched(self._compare_operators_string_equal())
         self._add_match_if_matched(self._compare_keywords_string_equal())
+        self._add_match_if_matched(self._compare_total_operatorcount_equal())
+        self._add_match_if_matched(self._compare_total_keywordcount_equal())
+
+    def compares_parseresults(self, parseresulta, parseresultb):
+        """
+        Returns True if the given ParseResult objects are the ones beeing compared
+        by this ParseResultCompareTwo. Order does not matter.
+        """
+        return {parseresulta, parseresultb} == {self.parseresult1, self.parseresult2}
 
     #
     #
@@ -126,21 +137,30 @@ class ParseResultCompareTwo(object):
 
 class ParseResultCompareMany(object):
     """
-
+    Used to compare many :class:`detektor.parseresult.ParseResult` objects.
     """
     def __init__(self, parseresults):
-        self.compare_results = []
+        """
+        Parameters:
+            parseresults (iterable):
+                List/iterable of :class:`detektor.parseresult.ParseResult` objects.
+        """
+        self._results = []
         for index1, parseresult1 in enumerate(parseresults):
             for index2 in xrange(index1 + 1, len(parseresults)):
                 parseresult2 = parseresults[index2]
                 comparetwo = ParseResultCompareTwo(parseresult1, parseresult2)
-                self.compare_results.append(comparetwo)
+                comparetwo.compare()
+                self._results.append(comparetwo)
 
     def sort_by_points_descending(self):
         """
         Sort by points in place.
         """
-        self.compare_results.sort(cmp=lambda a, b: cmp(b.points, a.points))
+        self._results.sort(cmp=lambda a, b: cmp(b.points, a.points))
 
     def __iter__(self):
-        return self.compare_results.__iter__()
+        return self._results.__iter__()
+
+    def get_results_as_list(self):
+        return self._results
