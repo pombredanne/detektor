@@ -3,7 +3,7 @@ import mock
 from detektor.comparer import CompareTwo, CompareMany
 
 
-class TestParseResultComparer(unittest.TestCase):
+class TestCompareTwo(unittest.TestCase):
 
     def test_compare_operators_and_keywords_string_equal_nomatch(self):
         a = mock.MagicMock()
@@ -149,22 +149,22 @@ class TestParseResultCompareMany(unittest.TestCase):
     def test_all_compared_single(self):
         parseresult1 = mock.MagicMock()
         comparemany = CompareMany([parseresult1])
-        self.assertEquals(comparemany.get_results_as_list(), [])
+        self.assertEquals(comparemany.results, [])
 
     def test_all_compared_two(self):
         parseresult1 = mock.MagicMock()
         parseresult2 = mock.MagicMock()
         comparemany = CompareMany([parseresult1, parseresult2])
-        self.assertEquals(len(comparemany.get_results_as_list()), 1)
-        self.assertEquals(comparemany.get_results_as_list()[0].parseresult1, parseresult1)
-        self.assertEquals(comparemany.get_results_as_list()[0].parseresult2, parseresult2)
+        self.assertEquals(len(comparemany.results), 1)
+        self.assertEquals(comparemany.results[0].parseresult1, parseresult1)
+        self.assertEquals(comparemany.results[0].parseresult2, parseresult2)
 
     def test_all_compared_three(self):
         parseresult1 = mock.MagicMock()
         parseresult2 = mock.MagicMock()
         parseresult3 = mock.MagicMock()
         comparemany = CompareMany([parseresult1, parseresult2, parseresult3])
-        results = comparemany.get_results_as_list()
+        results = comparemany.results
         self.assertEquals(len(results), 3)
         self.assertTrue(results[0].compares_parseresults(parseresult1, parseresult2))
         self.assertTrue(results[1].compares_parseresults(parseresult1, parseresult3))
@@ -176,7 +176,7 @@ class TestParseResultCompareMany(unittest.TestCase):
         parseresult3 = mock.MagicMock()
         parseresult4 = mock.MagicMock()
         comparemany = CompareMany([parseresult1, parseresult2, parseresult3, parseresult4])
-        results = comparemany.get_results_as_list()
+        results = comparemany.results
         self.assertEquals(len(results), 6)
         self.assertTrue(results[0].compares_parseresults(parseresult1, parseresult2))
         self.assertTrue(results[1].compares_parseresults(parseresult1, parseresult3))
@@ -202,7 +202,7 @@ class TestParseResultCompareMany(unittest.TestCase):
         comparemany = CompareMany([parseresult1, parseresult2, parseresult3])
         # for comparetwo in comparemany:
         #     print comparetwo
-        results = comparemany.get_results_as_list()
+        results = comparemany.results
         self.assertTrue(results[0].compares_parseresults(parseresult1, parseresult2))
         self.assertEquals(results[0].points, 10)
         self.assertEquals(results[0].get_scaled_points(), 1000)

@@ -180,22 +180,26 @@ class CompareMany(object):
             parseresults (iterable):
                 List/iterable of :class:`detektor.parseresult.ParseResult` objects.
         """
-        self._results = []
+        self.results = []
         for index1, parseresult1 in enumerate(parseresults):
             for index2 in xrange(index1 + 1, len(parseresults)):
                 parseresult2 = parseresults[index2]
-                comparetwo = CompareTwo(parseresult1, parseresult2)
-                comparetwo.compare()
-                self._results.append(comparetwo)
+                self.compare(parseresult1, parseresult2)
 
     def sort_by_points_descending(self):
         """
         Sort by points in place.
         """
-        self._results.sort(cmp=lambda a, b: cmp(b.points, a.points))
+        self.results.sort(cmp=lambda a, b: cmp(b.points, a.points))
 
     def __iter__(self):
-        return self._results.__iter__()
+        return self.results.__iter__()
 
-    def get_results_as_list(self):
-        return self._results
+    def compare(self, parseresult1, parseresult2):
+        """
+        Called once for each combination of all the ParseResult objects.
+        Can be overridden to tune the comparison code.
+        """
+        comparetwo = CompareTwo(parseresult1, parseresult2)
+        comparetwo.compare()
+        self.results.append(comparetwo)
