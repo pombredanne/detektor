@@ -14,11 +14,11 @@ class ParseResultCompareTwo(object):
         },
         'total_operatorcount_equal': {
             'points': 1,
-            'label': 'Equal number total operators.'
+            'label': 'Equal number of total operators.'
         },
         'total_keywordcount_equal': {
             'points': 1,
-            'label': 'Equal number total keywords.'
+            'label': 'Equal number of total keywords.'
         },
         'similar_functions': {
             # NOTE: No points for similar functions, they are collected

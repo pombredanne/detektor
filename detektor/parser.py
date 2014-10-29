@@ -1,8 +1,9 @@
+from detektor.languageparser.java import JavaLanguageParser
 from detektor.languageparser.python import PythonLanguageParser
 
 
 default_languageparsers = {
-    # 'java': JavaLanguageParser,
+    'java': JavaLanguageParser,
     'python': PythonLanguageParser,
 }
 

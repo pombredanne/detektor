@@ -172,10 +172,10 @@ class EditableParseResult(ParseResult):
         return self._make_string_from_count_dict(self.keywords)
 
     def get_number_of_operators(self):
-        return self.number_of_keywords
+        return self.number_of_operators
 
     def get_number_of_keywords(self):
-        return self.number_of_operators
+        return self.number_of_keywords
 
     def get_operators_and_keywords_string(self):
         return self.operators_and_keywords_string

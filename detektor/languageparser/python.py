@@ -6,7 +6,7 @@ import keyword
 class PythonLanguageParser(ShlexLanguageParserBase):
     operators = {
         '!', '+', '-', '*', '**', '/', '//', '%', '<<', '>>', '&', '|',
-        '%=', '/=', '//=', '**=',
+        '=', '%=', '/=', '//=', '**=', '*=', '-=',
         '^', '~', '<', '>', '<=', '>=', '==', '!=', '<>',
     }
     keywords = set(keyword.kwlist)
