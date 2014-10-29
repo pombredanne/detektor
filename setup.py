@@ -3,10 +3,10 @@ from setuptools import setup, find_packages
 setup(
     name='detektor',
     description='A library for finding similarities in code.',
-    version='1.0.0-beta.001',
+    version='1.1.0-beta.001',
     url='https://github.com/appressoas/detektor',
-    author='Magne Westlie',
-    author_email='magne@appresso.no',
+    author='Magne Westlie, Espen Angell Kristiansen, Tor Ivar Johansen',
+    author_email='magne@appresso.no,espen@appresso.no,tor@appresso.no',
     license='GPL',
     packages=find_packages(),
     zip_safe=False,
