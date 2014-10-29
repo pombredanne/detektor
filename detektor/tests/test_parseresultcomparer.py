@@ -1,6 +1,6 @@
 import unittest
 import mock
-from detektor.parseresultcomparer import ParseResultCompareTwo, ParseResultCompareMany
+from detektor.comparer import CompareTwo, CompareMany
 
 
 class TestParseResultComparer(unittest.TestCase):
@@ -11,7 +11,7 @@ class TestParseResultComparer(unittest.TestCase):
         b = mock.MagicMock()
         b.get_operators_and_keywords_string.return_value = 'b'
         self.assertEqual(
-            ParseResultCompareTwo(a, b)._compare_operators_and_keywords_string_equal(),
+            CompareTwo(a, b)._compare_operators_and_keywords_string_equal(),
             None)
 
     def test_compare_operators_and_keywords_string_equal(self):
@@ -20,7 +20,7 @@ class TestParseResultComparer(unittest.TestCase):
         b = mock.MagicMock()
         b.get_operators_and_keywords_string.return_value = 'x'
         self.assertEqual(
-            ParseResultCompareTwo(a, b)._compare_operators_and_keywords_string_equal(),
+            CompareTwo(a, b)._compare_operators_and_keywords_string_equal(),
             'operators_and_keywords_string_equal')
 
     def test_compare_operators_string_equal_nomatch(self):
@@ -29,7 +29,7 @@ class TestParseResultComparer(unittest.TestCase):
         b = mock.MagicMock()
         b.get_operators_string.return_value = 'b'
         self.assertEqual(
-            ParseResultCompareTwo(a, b)._compare_operators_string_equal(),
+            CompareTwo(a, b)._compare_operators_string_equal(),
             None)
 
     def test_compare_operators_string_equal(self):
@@ -38,7 +38,7 @@ class TestParseResultComparer(unittest.TestCase):
         b = mock.MagicMock()
         b.get_operators_string.return_value = 'x'
         self.assertEqual(
-            ParseResultCompareTwo(a, b)._compare_operators_string_equal(),
+            CompareTwo(a, b)._compare_operators_string_equal(),
             'operators_string_equal')
 
     def test_compare_keywords_string_equal_nomatch(self):
@@ -47,7 +47,7 @@ class TestParseResultComparer(unittest.TestCase):
         b = mock.MagicMock()
         b.get_keywords_string.return_value = 'b'
         self.assertEqual(
-            ParseResultCompareTwo(a, b)._compare_keywords_string_equal(),
+            CompareTwo(a, b)._compare_keywords_string_equal(),
             None)
 
     def test_compare_keywords_string_equal(self):
@@ -56,7 +56,7 @@ class TestParseResultComparer(unittest.TestCase):
         b = mock.MagicMock()
         b.get_keywords_string.return_value = 'x'
         self.assertEqual(
-            ParseResultCompareTwo(a, b)._compare_keywords_string_equal(),
+            CompareTwo(a, b)._compare_keywords_string_equal(),
             'keywords_string_equal')
 
     def test_compare_total_operatorcount_equal_nomatch(self):
@@ -65,7 +65,7 @@ class TestParseResultComparer(unittest.TestCase):
         b = mock.MagicMock()
         b.get_number_of_operators.return_value = 20
         self.assertEqual(
-            ParseResultCompareTwo(a, b)._compare_total_operatorcount_equal(),
+            CompareTwo(a, b)._compare_total_operatorcount_equal(),
             None)
 
     def test_compare_total_operatorcount_equal(self):
@@ -74,7 +74,7 @@ class TestParseResultComparer(unittest.TestCase):
         b = mock.MagicMock()
         b.get_number_of_operators.return_value = 5
         self.assertEqual(
-            ParseResultCompareTwo(a, b)._compare_total_operatorcount_equal(),
+            CompareTwo(a, b)._compare_total_operatorcount_equal(),
             'total_operatorcount_equal')
 
     def test_compare_total_keywordcount_equal_nomatch(self):
@@ -83,7 +83,7 @@ class TestParseResultComparer(unittest.TestCase):
         b = mock.MagicMock()
         b.get_number_of_keywords.return_value = 20
         self.assertEqual(
-            ParseResultCompareTwo(a, b)._compare_total_keywordcount_equal(),
+            CompareTwo(a, b)._compare_total_keywordcount_equal(),
             None)
 
     def test_compare_total_keywordcount_equal(self):
@@ -92,7 +92,7 @@ class TestParseResultComparer(unittest.TestCase):
         b = mock.MagicMock()
         b.get_number_of_keywords.return_value = 5
         self.assertEqual(
-            ParseResultCompareTwo(a, b)._compare_total_keywordcount_equal(),
+            CompareTwo(a, b)._compare_total_keywordcount_equal(),
             'total_keywordcount_equal')
 
     def test_compare_functions(self):
@@ -111,7 +111,7 @@ class TestParseResultComparer(unittest.TestCase):
         b = mock.MagicMock()
         b.codeblocktype = 'program'
         b.get_parsed_functions.return_value = [parsedfunction3, parsedfunction4]
-        comparetwo = ParseResultCompareTwo(a, b)
+        comparetwo = CompareTwo(a, b)
         functioncompare_summary = comparetwo._compare_functions()
         self.assertEqual(functioncompare_summary, 'similar_functions')
         self.assertEqual(comparetwo.functionpoints, 1)
@@ -139,7 +139,7 @@ class TestParseResultComparer(unittest.TestCase):
         b = mock.MagicMock()
         b.codeblocktype = 'program'
         b.get_parsed_functions.return_value = [parsedfunctionB1, parsedfunctionB2]
-        comparetwo = ParseResultCompareTwo(a, b)
+        comparetwo = CompareTwo(a, b)
         functioncompare_summary = comparetwo._compare_functions()
         self.assertEqual(functioncompare_summary, 'similar_functions')
         self.assertEqual(comparetwo.functionpoints, 14)
@@ -148,13 +148,13 @@ class TestParseResultComparer(unittest.TestCase):
 class TestParseResultCompareMany(unittest.TestCase):
     def test_all_compared_single(self):
         parseresult1 = mock.MagicMock()
-        comparemany = ParseResultCompareMany([parseresult1])
+        comparemany = CompareMany([parseresult1])
         self.assertEquals(comparemany.get_results_as_list(), [])
 
     def test_all_compared_two(self):
         parseresult1 = mock.MagicMock()
         parseresult2 = mock.MagicMock()
-        comparemany = ParseResultCompareMany([parseresult1, parseresult2])
+        comparemany = CompareMany([parseresult1, parseresult2])
         self.assertEquals(len(comparemany.get_results_as_list()), 1)
         self.assertEquals(comparemany.get_results_as_list()[0].parseresult1, parseresult1)
         self.assertEquals(comparemany.get_results_as_list()[0].parseresult2, parseresult2)
@@ -163,7 +163,7 @@ class TestParseResultCompareMany(unittest.TestCase):
         parseresult1 = mock.MagicMock()
         parseresult2 = mock.MagicMock()
         parseresult3 = mock.MagicMock()
-        comparemany = ParseResultCompareMany([parseresult1, parseresult2, parseresult3])
+        comparemany = CompareMany([parseresult1, parseresult2, parseresult3])
         results = comparemany.get_results_as_list()
         self.assertEquals(len(results), 3)
         self.assertTrue(results[0].compares_parseresults(parseresult1, parseresult2))
@@ -175,7 +175,7 @@ class TestParseResultCompareMany(unittest.TestCase):
         parseresult2 = mock.MagicMock()
         parseresult3 = mock.MagicMock()
         parseresult4 = mock.MagicMock()
-        comparemany = ParseResultCompareMany([parseresult1, parseresult2, parseresult3, parseresult4])
+        comparemany = CompareMany([parseresult1, parseresult2, parseresult3, parseresult4])
         results = comparemany.get_results_as_list()
         self.assertEquals(len(results), 6)
         self.assertTrue(results[0].compares_parseresults(parseresult1, parseresult2))
@@ -199,7 +199,7 @@ class TestParseResultCompareMany(unittest.TestCase):
         parseresult3.label = '3'
         parseresult3.get_number_of_operators.return_value = 10
 
-        comparemany = ParseResultCompareMany([parseresult1, parseresult2, parseresult3])
+        comparemany = CompareMany([parseresult1, parseresult2, parseresult3])
         # for comparetwo in comparemany:
         #     print comparetwo
         results = comparemany.get_results_as_list()

@@ -49,7 +49,7 @@ if __name__ == '__main__':
     """)
 
     print 'Comparison result ordered with best matches first'
-    comparemany = detektor.parseresultcomparer.ParseResultCompareMany([
+    comparemany = detektor.comparer.CompareMany([
         parseresult1, parseresult2, parseresult3])
     comparemany.sort_by_points_descending()
     for comparetwo in comparemany:

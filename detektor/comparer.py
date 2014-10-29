@@ -1,4 +1,4 @@
-class ParseResultCompareTwo(object):
+class CompareTwo(object):
     matchmap = {
         'operators_and_keywords_string_equal': {
             'points': 10,
@@ -57,7 +57,7 @@ class ParseResultCompareTwo(object):
         #: readable string for a matchid.
         self.summary = []
 
-        #: List of :obj:`.ParseResultCompareTwo` objects for all
+        #: List of :obj:`.CompareTwo` objects for all
         #: functions within the two ParseResult objects.
         self.comparetwo_for_functions = []
 
@@ -106,7 +106,7 @@ class ParseResultCompareTwo(object):
     def compares_parseresults(self, parseresulta, parseresultb):
         """
         Returns True if the given ParseResult objects are the ones beeing compared
-        by this ParseResultCompareTwo. Order does not matter.
+        by this CompareTwo. Order does not matter.
         """
         return {parseresulta, parseresultb} == {self.parseresult1, self.parseresult2}
 
@@ -158,7 +158,7 @@ class ParseResultCompareTwo(object):
         functionparseresults = self.parseresult1.get_parsed_functions()
         for functionparseresult1 in self.parseresult1.get_parsed_functions():
             for functionparseresult2 in self.parseresult2.get_parsed_functions():
-                comparetwo = ParseResultCompareTwo(
+                comparetwo = CompareTwo(
                     functionparseresult1, functionparseresult2,
                     scale=self.functionscale)
                 comparetwo.compare()
@@ -170,7 +170,7 @@ class ParseResultCompareTwo(object):
             return None
 
 
-class ParseResultCompareMany(object):
+class CompareMany(object):
     """
     Used to compare many :class:`detektor.parseresult.ParseResult` objects.
     """
@@ -184,7 +184,7 @@ class ParseResultCompareMany(object):
         for index1, parseresult1 in enumerate(parseresults):
             for index2 in xrange(index1 + 1, len(parseresults)):
                 parseresult2 = parseresults[index2]
-                comparetwo = ParseResultCompareTwo(parseresult1, parseresult2)
+                comparetwo = CompareTwo(parseresult1, parseresult2)
                 comparetwo.compare()
                 self._results.append(comparetwo)
 
