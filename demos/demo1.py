@@ -1,10 +1,16 @@
-""" Get detektor signature for code in a given file.
+if __name__ == '__main__':
+    import os
+    import pprint
+    import detektor
 
-Opens the file 'demo_files/donny/helloworldplus.py' and sends this to the
-detektor codeparser.
+    #
+    #
+    # Parse 2 fairly similar programs, and one only slightly similar one
+    #
+    #
+    parser = detektor.parser.make_parser('python')
 
-The file looks like this:
-
+    parseresult1 = parser.parse("""
     import os
 
     def add(a, b):
@@ -13,18 +19,38 @@ The file looks like this:
     print 'Hello %s!' % 'world'
     a = 1
     print '%s + %s equals %s' % (a, a, add(a, a))
+    """, label='program1.py')
 
-Prints misc info.
-"""
-import os
-import pprint
-import detektor
+    parseresult2 = parser.parse("""
+    import os
 
-filepath = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), 'demo_files', 'donny', 'helloworldplus.py'))
+    def sum(x, y):
+        return x + y
 
-print 'Get signature for file "{}"'.format(filepath)
-code_signature = detektor.get_detektor_signature_from_file('python', filepath)
+    print 'Hello %s!' % 'world'
+    mynumber = 1
+    print '{} + {} = {}'.format(mynumber, mynumber, sum(mynumber, mynumber))
+    """, label='program2.py')
 
-print 'Returned code signature:'
-pprint.pprint(code_signature)
+    parseresult3 = parser.parse("""
+    import os
+
+    def add(a, b):
+        return a + b
+
+    print 'Hello %s!' % 'world'
+    firstnumber = 10
+    secondnumber = 20
+    print '{firstnumber} + {secondnumber} equals {result}'.format(
+        firstnumber=firstnumber,
+        secondnumber=secondnumber,
+        result=add(firstnumber, secondnumber))
+    """, label='program3.py')
+
+
+    print 'Comparison result ordered with best matches first'
+    comparemany = detektor.parseresultcomparer.ParseResultCompareMany([
+        parseresult1, parseresult2, parseresult3])
+    comparemany.sort_by_points_descending()
+    for comparetwo in comparemany:
+        print comparetwo
