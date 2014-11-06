@@ -63,8 +63,8 @@ class CompareTwo(object):
 
     def __unicode__(self):
         return u'{parseresult1},{parseresult2} - Points: {points}, summary: {summary}'.format(
-            parseresult1=self.parseresult1.label,
-            parseresult2=self.parseresult2.label,
+            parseresult1=self.parseresult1.get_label(),
+            parseresult2=self.parseresult2.get_label(),
             points=self.get_scaled_points(),
             summary=self.get_summary_descriptions_as_string())
 
@@ -100,7 +100,7 @@ class CompareTwo(object):
         self._add_match_if_matched(self._compare_keywords_string_equal())
         self._add_match_if_matched(self._compare_total_operatorcount_equal())
         self._add_match_if_matched(self._compare_total_keywordcount_equal())
-        if self.parseresult1.codeblocktype == 'program' and self.parseresult2.codeblocktype == 'program':
+        if self.parseresult1.get_codeblocktype() == 'program' and self.parseresult2.get_codeblocktype() == 'program':
             self._add_match_if_matched(self._compare_functions())
 
     def compares_parseresults(self, parseresulta, parseresultb):
