@@ -202,4 +202,23 @@ class CompareMany(object):
         """
         comparetwo = CompareTwo(parseresult1, parseresult2)
         comparetwo.compare()
+        self.add_to_results(comparetwo)
+
+    def add_to_results(self, comparetwo):
+        """
+        Called once after each comparison of two parseresults are
+        completed.
+
+        Defaults to adding the given :class:`.CompareTwo`
+        object to :obj:`.results`, but you can override this to
+        limit what to add to results.
+
+        Typically you may want to override this to avoid adding
+        results with zero points::
+
+            class MyCompareMany(detektor.comparer.CompareMany):
+                def add_to_results(self, comparetwo):
+                    if comparetwo.get_scaled_points() > 0:
+                        super(MyCompareMany, self).add_to_results(comparetwo)
+        """
         self.results.append(comparetwo)
