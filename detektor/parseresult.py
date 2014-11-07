@@ -196,5 +196,5 @@ class EditableParseResult(ParseResult):
             'number_of_keywords': self.get_number_of_keywords(),
             'operators_and_keywords_string': self.get_operators_and_keywords_string(),
             'normalized_sourcecode': self.get_normalized_sourcecode(),
-            'parsed_functions': [function.serialize_as_dict for function in self.parsed_functions],
+            'parsed_functions': [function.serialize_as_dict() for function in self.parsed_functions],
         }
