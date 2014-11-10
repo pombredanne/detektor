@@ -221,4 +221,4 @@ class CompareMany(object):
                     if comparetwo.get_scaled_points() > 0:
                         super(MyCompareMany, self).add_to_results(comparetwo)
         """
-        self.results.append(comparetwo)
+        self.results.sort(cmp=lambda a, b: cmp(b.get_scaled_points(), a.get_scaled_points()))
