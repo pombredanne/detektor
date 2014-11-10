@@ -45,7 +45,11 @@ class ShlexLanguageParserBase(LanguageParserBase):
     def parse_program(self, parseresult, sourcecode):
         lexer = self.get_shlexobject(sourcecode)
         while True:
-            token = lexer.get_token()
-            if not token:
-                break
-            self.shlex_parse_token(parseresult, token)
+            try:
+                token = lexer.get_token()
+            except ValueError as e:
+                continue
+            else:
+                if not token:
+                    break
+                self.shlex_parse_token(parseresult, token)
