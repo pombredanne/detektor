@@ -190,7 +190,7 @@ class CompareMany(object):
         """
         Sort by points in place.
         """
-        self.results.sort(cmp=lambda a, b: cmp(b.points, a.points))
+        self.results.sort(cmp=lambda a, b: cmp(b.get_scaled_points(), a.get_scaled_points()))
 
     def __iter__(self):
         return self.results.__iter__()
