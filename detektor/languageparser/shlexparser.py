@@ -47,8 +47,8 @@ class ShlexLanguageParserBase(LanguageParserBase):
         while True:
             try:
                 token = lexer.get_token()
-            except ValueError as e:
-                continue
+            except ValueError:
+                break
             else:
                 if not token:
                     break
