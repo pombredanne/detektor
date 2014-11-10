@@ -60,17 +60,6 @@ comparison is higher than 20 percent (or which ever limit is supplied as
 argument) average it is reported.
 
 
-## Adding support for new languages
-
-Make a new file in the "/dat" directory where you put the keywords and the
-operators to look for in the new language and use KEYWORDS: and OPERATORS: tags
-in this file. See "dat/python.dat" for example.
-
-Open the "dat/supported_languages.dat" file and add a new line with the name of
-the new language, the filesuffix to look for, and the name of the file with the
-reserved words and the operators.
-
-
 ## Develop detektor
 
 Install:
