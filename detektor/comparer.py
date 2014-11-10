@@ -74,6 +74,9 @@ class CompareTwo(object):
     def __repr__(self):
         return str(self)
 
+    def get_parseresults_as_tuple(self):
+        return (self.parseresult1, self.parseresult2)
+
     def get_scaled_points(self):
         return self.points * self.scale + self.functionpoints * self.functionscale
 
