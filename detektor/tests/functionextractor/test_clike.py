@@ -29,3 +29,16 @@ class TestClikeFunctionExtractor(unittest.TestCase):
         self.assertEquals(functions[1].name, 'int[] test()')
         self.assertEquals(functions[2].name, 'Array<String> anotherTest()')
         self.assertEquals(functions[0].sourcecode.strip(), '// Some code here')
+
+    def test_comment_before_ignored(self):
+        keywords = {
+            'if', 'while'
+        }
+        functions = ClikeFunctionExtractor(keywords).extract("""
+            // Mycomment
+            main(int i) {
+                // Some code here
+            }
+        """)
+        self.assertEquals(len(functions), 1)
+        self.assertEquals(functions[0].name, 'void main(int i)')
