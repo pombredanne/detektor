@@ -13,21 +13,8 @@ in files are high based on a couple of techniques described below.
 
     $ pip install detektor
 
-## Usage
-
-Use command `fab demo` and look at these files:
-
-* Send path to file and get the "detektor fingerprint" [demo1.py](demo1.py)
-* Set the `detektor_fingerprint` on an object based on a filepath [demo2.py](demo2.py)
-* Set the `detektor_fingerprint` on a list of objects based on their files [demo3.py](demo3.py)
-* Parse a directory, find files and compare. Show result. [demo4.py](demo4.py)
-
-## Run demo
-
-Check out the repo from https://github.com/appressoas/detektor, and run:
-
-    $ python demos/demo1.py
-    ... also try demo2, demo3 and demo4
+## Examples?
+See the demos/ directory.
 
 ## Details
 
