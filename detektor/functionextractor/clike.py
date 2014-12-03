@@ -1,3 +1,4 @@
+from pprint import pprint
 import re
 from detektor.functionextractor.base import BaseFunctionExtractor
 from detektor.functionextractor.base import ExtractedFunction
@@ -30,8 +31,13 @@ class ClikeFunctionExtractor(BaseFunctionExtractor):
                 function_startindex = match.end()
                 function_endindex = self._find_function_end(sourcecode, function_startindex)
                 function_sourcecode = sourcecode[function_startindex:function_endindex]
+                matches = match.groupdict()
+                returntype = unicode(matches['returntype'], 'utf-8', 'replace')
+                name = unicode(matches['name'], 'utf-8', 'replace')
+                arguments = unicode(matches['arguments'], 'utf-8', 'replace')
                 functions.append(ExtractedFunction(
-                    name=u'{returntype} {name}({arguments})'.format(**match.groupdict()),
+                    name=u'{returntype} {name}({arguments})'.format(
+                        returntype=returntype, name=name, arguments=arguments),
                     sourcecode=function_sourcecode
                 ))
         return functions
